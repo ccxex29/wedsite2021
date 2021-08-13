@@ -39,7 +39,7 @@ const HeaderNavigator = props => {
             <Link href={'/'}>
                 <a style={{color: `hsl(0, 0%, ${((trackedYOffset / topScrollTarget) < .5) ? '0' : '100'}%`}}>
                     Fec
-                    <span style={{color: 'red'}}>{andText}</span>
+                    <span style={{color: '#f99544'}}>{andText}</span>
                     Grace
                 </a>
             </Link>
@@ -47,14 +47,21 @@ const HeaderNavigator = props => {
     };
     
     return (
-        <Affix offsetTop={0}>
+        <Affix offsetTop={0} style={{
+            position: router.pathname === '/' ? 'absolute' : 'relative',
+            width: '100%',
+            zIndex: 99,
+        }}>
         <PageHeader
             title={<HeaderTitle />}
             style={{
-                backgroundColor: `rgba(61, 146, 90, ${trackedYOffset/topScrollTarget})`
+                backgroundColor: `rgba(150, 71, 18, ${((trackedYOffset > topScrollTarget) ? topScrollTarget : trackedYOffset)/topScrollTarget*0.8})`,
+                position: 'relative',
+                height: '100%',
             }}
             extra={[
-                <Menu mode={'horizontal'} selectedKeys={[router.pathname]} key={'nav-menu'}>
+                <Menu mode={'horizontal'} selectedKeys={[router.pathname]} key={'nav-menu'} style={{
+                }}>
                     {/* Live Streaming Route */}
                     <Menu.Item key={'/livestreaming'}>
                         <Link href={'/livestreaming'}>

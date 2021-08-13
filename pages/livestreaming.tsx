@@ -7,7 +7,8 @@ const livestreaming = props => {
             <iframe 
                 className={styles.embed}
                 src={`https://www.youtube-nocookie.com/embed/${contentId}?&showsearch=0&rel=0&color=white`}
-                title="Watch via Youtube" frameBorder="0"
+                title="Watch via Youtube"
+                frameBorder="0"
                 allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen>
             </iframe>
