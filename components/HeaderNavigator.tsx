@@ -3,10 +3,13 @@ import {useState, useEffect} from 'react';
 import Link from 'next/link';
 import {useRouter} from 'next/router';
 
-const topScrollTarget = 200;
+/**
+ * @type number
+ */
+const topScrollTarget: number = 200;
 
-const HeaderNavigator = props => {
-    const [andText, setAndText] = useState('Und');
+const HeaderNavigator = (): JSX.Element => {
+    const [andText] = useState('Und');
     const [trackedYOffset, setTrackedYOffset] = useState(0);
     const router = useRouter();
 
@@ -30,10 +33,9 @@ const HeaderNavigator = props => {
     /**
      * Dynamic Header Logo/Title
      *
-     * @param props
      * @returns {JSX.Element}
      */
-    const HeaderTitle = props => {
+    const HeaderTitle = (): JSX.Element => {
         return (
             /* Link to Home */
             <Link href={'/'}>

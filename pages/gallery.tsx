@@ -1,4 +1,4 @@
-const gallery = props => {
+const gallery = (): JSX.Element => {
     return (
         <div>
 

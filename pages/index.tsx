@@ -3,10 +3,10 @@ import {Typography, Row, Col, Steps} from 'antd';
 import Image from 'next/image';
 import sunflower from '../public/sunflower.webp';
 
-const {Title, Text} = Typography;
+const {Title} = Typography;
 const {Step} = Steps;
 
-export default function Home() {
+export default function Home(): JSX.Element {
     const [trackedYOffset, setTrackedYOffset] = useState(0);
 
     useEffect(() => {
@@ -29,8 +29,6 @@ export default function Home() {
     return (
         <main>
             <section style={{
-                // backgroundImage: 'url(https://images.unsplash.com/photo-1628690530954-c065d38e74d2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80)',
-                // backgroundSize: 'cover',
                 height: 800,
                 overflow: 'hidden',
                 position: 'relative',
@@ -43,11 +41,6 @@ export default function Home() {
                 }}>
                     <Image
                         src={sunflower}
-                        style={{
-                            width: '100%',
-                            // height: '36%',
-                            position: 'relative',
-                        }}
                         layout={'responsive'}
                         placeholder={'blur'}
                         priority={false}

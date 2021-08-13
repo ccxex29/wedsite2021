@@ -1,7 +1,7 @@
 import styles from '../styles/Home.module.css';
 import {HeartFilled} from '@ant-design/icons';
 
-const Footer = props => {
+const Footer = (): JSX.Element => {
     return (
         <footer className={styles.footer}>
             <a

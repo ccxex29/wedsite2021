@@ -1,6 +1,6 @@
 import styles from '../styles/Livestreaming.module.css';
 
-const livestreaming = props => {
+const livestreaming = (): JSX.Element => {
     const contentId = 'dQw4w9WgXcQ';
     return (
         <div className={styles.cover}>

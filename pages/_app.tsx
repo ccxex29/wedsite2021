@@ -5,8 +5,9 @@ import HeaderNavigator from '../components/HeaderNavigator';
 import Footer from '../components/Footer';
 import styles from '../styles/Home.module.css';
 import BottomFAB from '../components/BottomFAB';
+import {AppProps} from 'next/app';
 
-function MyApp({Component, pageProps}: Component) {
+function MyApp({Component, pageProps}: AppProps) {
     return (
         <div className={styles.container}>
             <Head>
