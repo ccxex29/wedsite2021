@@ -1,8 +1,8 @@
 const gallery = (): JSX.Element => {
     return (
-        <div>
+        <main>
 
-        </div>
+        </main>
     )
 }
 

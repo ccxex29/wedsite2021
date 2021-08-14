@@ -3,7 +3,7 @@ import styles from '../styles/Livestreaming.module.css';
 const livestreaming = (): JSX.Element => {
     const contentId = 'dQw4w9WgXcQ';
     return (
-        <div className={styles.cover}>
+        <main className={styles.cover}>
             <iframe 
                 className={styles.embed}
                 src={`https://www.youtube-nocookie.com/embed/${contentId}?&showsearch=0&rel=0&color=white`}
@@ -12,7 +12,7 @@ const livestreaming = (): JSX.Element => {
                 allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen>
             </iframe>
-        </div>
+        </main>
     )
 }
 

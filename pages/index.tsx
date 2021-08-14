@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import {Typography, Row, Col, Steps} from 'antd';
 import Image from 'next/image';
 import sunflower from '../public/sunflower.webp';
+import {animated} from 'react-spring';
 
 const {Title} = Typography;
 const {Step} = Steps;
@@ -29,22 +30,23 @@ export default function Home(): JSX.Element {
     return (
         <main>
             <section style={{
-                height: 800,
+                height: '100vh',
                 overflow: 'hidden',
                 position: 'relative',
             }}>
-                <div style={{
+                <animated.div style={{
                     position: 'relative',
-                    top: (trackedYOffset * 0.25) - 50,
+                    top: (trackedYOffset * 0.15),
                     height: '100%',
-                    transition: 'top 0.05 ease-in',
                 }}>
                     <Image
                         src={sunflower}
-                        layout={'responsive'}
+                        layout={'fill'}
+                        objectFit={'cover'}
                         placeholder={'blur'}
                         priority={false}
                         quality={95}
+                        alt={'Image description'}
                     />
                     <Row justify={'center'} align={'middle'} style={{
                         flexDirection: 'column',
@@ -52,6 +54,7 @@ export default function Home(): JSX.Element {
                         width: '100%',
                         position: 'absolute',
                         top: 0,
+                        textAlign: 'center',
                     }}>
                         <Col>
                             <Title style={{
@@ -67,7 +70,7 @@ export default function Home(): JSX.Element {
                             </Title>
                         </Col>
                     </Row>
-                </div>
+                </animated.div>
             </section>
             <section style={{
                 padding: 100,
