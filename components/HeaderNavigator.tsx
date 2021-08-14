@@ -2,6 +2,8 @@ import {PageHeader, Menu, Affix} from 'antd';
 import {useState, useEffect} from 'react';
 import Link from 'next/link';
 import {useRouter} from 'next/router';
+import styles from '../styles/Header.module.css';
+import {JSX} from '@babel/types';
 
 /**
  * @type number
@@ -30,6 +32,18 @@ const HeaderNavigator = (): JSX.Element => {
         setTrackedYOffset(window.pageYOffset);
     };
 
+    const isLivestreaming = (): boolean => {
+        return router.pathname === '/livestreaming';
+    };
+
+    const isHome = (): boolean => {
+        return router.pathname === '/';
+    };
+
+    const isGallery = (): boolean => {
+        return router.pathname === '/gallery';
+    };
+
     /**
      * Dynamic Header Logo/Title
      *
@@ -39,7 +53,11 @@ const HeaderNavigator = (): JSX.Element => {
         return (
             /* Link to Home */
             <Link href={'/'}>
-                <a style={{color: `hsl(0, 0%, ${((trackedYOffset / topScrollTarget) < .5) ? '0' : '100'}%`}}>
+                <a className={styles.titleLogo}
+                   style={{
+                       color: !isHome() ? '#000' : `hsl(0, 0%, 100%`,
+                       transition: 'color 0.5s ease-in',
+                   }}>
                     Fec
                     <span style={{color: '#f99544'}}>{andText}</span>
                     Grace
@@ -47,43 +65,62 @@ const HeaderNavigator = (): JSX.Element => {
             </Link>
         )
     };
-    
+
+    /**
+     * Controls how the header would slowly fade
+     *
+     * @return {JSX.Element}
+     */
+    const DynamicHeader = (): JSX.Element => {
+        return (
+            <PageHeader
+                title={<HeaderTitle/>}
+                style={{
+                    backgroundColor:
+                        isLivestreaming() ?
+                            'unset' :
+                            `rgba(150, 71, 18, ${((trackedYOffset > topScrollTarget) ? topScrollTarget : trackedYOffset) / topScrollTarget * 0.8})`,
+                    position: 'relative',
+                    height: '100%',
+                }}
+                extra={[
+                    <Menu mode={'horizontal'} selectedKeys={[router.pathname]} key={'nav-menu'} className={styles.menu}>
+                        {/* Live Streaming Route */}
+                        <Menu.Item key={'/livestreaming'} className={styles.menuItem}>
+                            <Link href={'/livestreaming'}>
+                                <a>
+                                    Livestreaming
+                                </a>
+                            </Link>
+                        </Menu.Item>
+                        {/* Gallery Route */}
+                        <Menu.Item key={'/gallery'} className={styles.menuItem}>
+                            <Link href={'/gallery'}>
+                                <a>
+                                    Gallery
+                                </a>
+                            </Link>
+                        </Menu.Item>
+                    </Menu>,
+                ]}
+            >
+            </PageHeader>
+        );
+    }
+
+    if (isLivestreaming()) {
+        return (
+            <DynamicHeader/>
+        );
+    }
+
     return (
         <Affix offsetTop={0} style={{
-            position: router.pathname === '/' ? 'absolute' : 'relative',
+            position: isHome() ? 'absolute' : 'relative',
             width: '100%',
             zIndex: 99,
         }}>
-        <PageHeader
-            title={<HeaderTitle />}
-            style={{
-                backgroundColor: `rgba(150, 71, 18, ${((trackedYOffset > topScrollTarget) ? topScrollTarget : trackedYOffset)/topScrollTarget*0.8})`,
-                position: 'relative',
-                height: '100%',
-            }}
-            extra={[
-                <Menu mode={'horizontal'} selectedKeys={[router.pathname]} key={'nav-menu'} style={{
-                }}>
-                    {/* Live Streaming Route */}
-                    <Menu.Item key={'/livestreaming'}>
-                        <Link href={'/livestreaming'}>
-                            <a>
-                                Livestreaming
-                            </a>
-                        </Link>
-                    </Menu.Item>
-                    {/* Gallery Route */}
-                    <Menu.Item key={'/gallery'}>
-                        <Link href={'/gallery'}>
-                            <a>
-                                Gallery
-                            </a>
-                        </Link>
-                    </Menu.Item>
-                </Menu>
-            ]}
-        >
-        </PageHeader>
+            <DynamicHeader/>
         </Affix>
     );
 };
