@@ -1,6 +1,6 @@
 .imageCover {
     transform: scale(1.0);
-    /*object-position: top;*/
+    object-position: center;
 }
 
 .imageCoverWrapper {

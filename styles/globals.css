@@ -21,9 +21,6 @@ a {
   box-sizing: border-box;
 }
 
-#nprogress .spinner.spinner {
-  display: none;
-}
 
 /*li.ant-menu-item:hover {*/
 /*  color: white !important;*/

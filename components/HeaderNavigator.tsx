@@ -4,6 +4,7 @@ import Link from 'next/link';
 import {useRouter} from 'next/router';
 import styles from '../styles/Header.module.sass';
 import {JSX} from '@babel/types';
+import colours from '../constants/colours';
 
 /**
  * @type number
@@ -59,7 +60,7 @@ const HeaderNavigator = (): JSX.Element => {
                        transition: 'color 0.5s ease-in',
                    }}>
                     Fec
-                    <span style={{color: '#f99544'}}>{andText}</span>
+                    <span style={{color: colours.primary}}>{andText}</span>
                     Grace
                 </a>
             </Link>
@@ -95,9 +96,9 @@ const HeaderNavigator = (): JSX.Element => {
                           key={'nav-menu'}
                           className={`${!isLivestreaming() ? styles.menu : ''}`}
                           style={{
-                              backgroundColor: `rgba(0, 0, 0, ${
-                                  isHome() ? 0.5 - headerTranslucentColor() : '0%'
-                              })`
+                              // backgroundColor: `rgba(0, 0, 0, ${
+                              //     isHome() ? 0.5 - headerTranslucentColor() : '0%'
+                              // })`
                           }}
                     >
                         {/* Live Streaming Route */}

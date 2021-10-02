@@ -8,15 +8,17 @@ import BottomFAB from '../components/BottomFAB';
 import {AppProps} from 'next/app';
 import Router from 'next/router';
 import NProgress from 'nprogress';
+import {router} from 'next/client';
 
-// @ts-ignore
-Router.onRouteChangeStart = url => {
-    NProgress.start();
-}
-// @ts-ignore
-Router.onRouteChangeComplete = () => NProgress.done();
-// @ts-ignore
-Router.onRouteChangeComplete = () => NProgress.done();
+router.events.on('routeChangeStart', url => {
+    NProgress.configure({showSpinner: false}).start();
+});
+router.events.on('routeChangeComplete', url => {
+    NProgress.done();
+});
+router.events.on('routeChangeError', url => {
+    NProgress.done();
+});
 
 function MyApp({Component, pageProps}: AppProps) {
     return (

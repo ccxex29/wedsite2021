@@ -26,6 +26,17 @@ const Home = (): JSX.Element => {
                     property: 'translateY',
                 },
             ]
+        },
+        {
+            start: 0,
+            end: dimensions.height * .5,
+            properties: [
+                {
+                    startValue: 0,
+                    endValue: 1,
+                    property: 'grayscale'
+                }
+            ]
         }
     ];
 
@@ -91,8 +102,6 @@ const Home = (): JSX.Element => {
                     </Row>
             </section>
             <section id={'section-our-story'} style={{
-                height: '100vh',
-                overflow: 'hidden',
                 position: 'relative',
                 padding: 100,
             }}>
