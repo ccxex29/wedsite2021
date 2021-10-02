@@ -2,7 +2,7 @@ import {PageHeader, Menu, Affix} from 'antd';
 import {useState, useEffect} from 'react';
 import Link from 'next/link';
 import {useRouter} from 'next/router';
-import styles from '../styles/Header.module.css';
+import styles from '../styles/Header.module.sass';
 import {JSX} from '@babel/types';
 
 /**
@@ -55,7 +55,7 @@ const HeaderNavigator = (): JSX.Element => {
             <Link href={'/'}>
                 <a className={styles.titleLogo}
                    style={{
-                       color: !isHome() ? '#000' : `hsl(0, 0%, 100%`,
+                       color: !isLivestreaming() ? `hsl(0, 0%, 100%)` : '#000',
                        transition: 'color 0.5s ease-in',
                    }}>
                     Fec
@@ -65,6 +65,10 @@ const HeaderNavigator = (): JSX.Element => {
             </Link>
         )
     };
+
+    const headerTranslucentColor = (): number => {
+        return ((trackedYOffset > topScrollTarget) ? topScrollTarget : trackedYOffset) / topScrollTarget * 0.9;
+    }
 
     /**
      * Controls how the header would slowly fade
@@ -79,14 +83,25 @@ const HeaderNavigator = (): JSX.Element => {
                     backgroundColor:
                         isLivestreaming() ?
                             'unset' :
-                            `rgba(150, 71, 18, ${((trackedYOffset > topScrollTarget) ? topScrollTarget : trackedYOffset) / topScrollTarget * 0.8})`,
+                            isHome() ?
+                            `rgba(0, 0, 0, ${headerTranslucentColor()})` :
+                            'rgba(0, 0, 0, 50%)',
                     position: 'relative',
                     height: '100%',
                 }}
                 extra={[
-                    <Menu mode={'horizontal'} selectedKeys={[router.pathname]} key={'nav-menu'} className={styles.menu}>
+                    <Menu mode={'horizontal'}
+                          selectedKeys={[router.pathname]}
+                          key={'nav-menu'}
+                          className={`${!isLivestreaming() ? styles.menu : ''}`}
+                          style={{
+                              backgroundColor: `rgba(0, 0, 0, ${
+                                  isHome() ? 0.5 - headerTranslucentColor() : '0%'
+                              })`
+                          }}
+                    >
                         {/* Live Streaming Route */}
-                        <Menu.Item key={'/livestreaming'} className={styles.menuItem}>
+                        <Menu.Item key={'/livestreaming'} className={!isLivestreaming() ? styles.menuItem : ''}>
                             <Link href={'/livestreaming'}>
                                 <a>
                                     Livestreaming
@@ -94,7 +109,7 @@ const HeaderNavigator = (): JSX.Element => {
                             </Link>
                         </Menu.Item>
                         {/* Gallery Route */}
-                        <Menu.Item key={'/gallery'} className={styles.menuItem}>
+                        <Menu.Item key={'/gallery'} className={!isLivestreaming() ? styles.menuItem : ''}>
                             <Link href={'/gallery'}>
                                 <a>
                                     Gallery

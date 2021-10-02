@@ -1,4 +1,4 @@
-import styles from '../styles/Home.module.css';
+import styles from '../styles/Home.module.sass';
 import {HeartFilled} from '@ant-design/icons';
 
 const Footer = (): JSX.Element => {

@@ -1,30 +1,47 @@
 import {useEffect, useState} from 'react';
-import {Typography, Row, Col, Steps} from 'antd';
+import {Typography, Row, Col} from 'antd';
 import Image from 'next/image';
-import sunflower from '../public/sunflower.webp';
-import {animated} from 'react-spring';
+import sunflower from '../public/gallery-images/HAN_8747.jpg';
+import styles from '../styles/HomePage.module.css';
+// @ts-ignore
+import Plx from 'react-plx';
+import TimelineView from '../components/TimelineView';
 
 const {Title} = Typography;
-const {Step} = Steps;
 
-export default function Home(): JSX.Element {
-    const [trackedYOffset, setTrackedYOffset] = useState(0);
+
+const Home = (): JSX.Element => {
+    const [dimensions, setDimensions] = useState({
+        width: 0,
+        height: 0,
+    });
+    const parallaxImgCoverData = [
+        {
+            start: 0,
+            end: dimensions.height,
+            properties: [
+                {
+                    startValue: 0,
+                    endValue: .25 * dimensions.height,
+                    property: 'translateY',
+                },
+            ]
+        }
+    ];
 
     useEffect(() => {
-        trackYOffset();
-        document.addEventListener('scroll', trackYOffset);
+        trackDimensions();
+        document.addEventListener('resize', trackDimensions);
         return () => {
-            document.removeEventListener('scroll', trackYOffset)
+            document.removeEventListener('resize', trackDimensions);
         }
     }, []);
 
-    /**
-     * Sync trackedYOffset value to the window Y offset
-     *
-     * @returns {void}
-     */
-    const trackYOffset = () => {
-        setTrackedYOffset(window.pageYOffset);
+    const trackDimensions = async () => {
+        setDimensions({
+            width: window.innerWidth,
+            height: window.innerHeight,
+        });
     };
 
     return (
@@ -34,20 +51,22 @@ export default function Home(): JSX.Element {
                 overflow: 'hidden',
                 position: 'relative',
             }}>
-                <animated.div style={{
-                    position: 'relative',
-                    top: (trackedYOffset * 0.15),
-                    height: '100%',
-                }}>
+                <Plx
+                    key={'cover-img-plx'}
+                    className={styles.imageCoverWrapper}
+                    parallaxData={parallaxImgCoverData}
+                >
                     <Image
+                        className={styles.imageCover}
                         src={sunflower}
                         layout={'fill'}
                         objectFit={'cover'}
                         placeholder={'blur'}
-                        priority={false}
-                        quality={95}
+                        priority={true}
+                        quality={87}
                         alt={'Image description'}
                     />
+                </Plx>
                     <Row justify={'center'} align={'middle'} style={{
                         flexDirection: 'column',
                         height: '100%',
@@ -60,27 +79,31 @@ export default function Home(): JSX.Element {
                             <Title style={{
                                 color: '#fff',
                                 fontSize: 80,
-                            }}>WEEE HOOOO!!</Title>
+                            }}>Title & Title</Title>
                         </Col>
                         <Col>
                             <Title level={4} style={{
                                 color: '#fff'
                             }}>
-                                This is very descriptive... Right?
+                                Some other words maybe?
                             </Title>
                         </Col>
                     </Row>
-                </animated.div>
             </section>
-            <section style={{
+            <section id={'section-our-story'} style={{
+                height: '100vh',
+                overflow: 'hidden',
+                position: 'relative',
                 padding: 100,
             }}>
-                <Title level={1} style={{textAlign: 'center', marginBottom: 75}}>Awarr Story</Title>
-                <Steps progressDot current={1} direction="vertical">
-                    <Step title={'We meet each other'} description={'Description Test'} />
-                    <Step title={'And again'} />
-                </Steps>
+                <Title level={1} style={{textAlign: 'center', marginBottom: 75}}>Our Story</Title>
+                <TimelineView dimensions={dimensions} />
+            </section>
+            <section style={{height: '200vh'}}>
+                <div>emptiness</div>
             </section>
         </main>
     )
-}
+};
+
+export default Home;
