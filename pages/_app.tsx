@@ -8,15 +8,16 @@ import BottomFAB from '../components/BottomFAB';
 import {AppProps} from 'next/app';
 import Router from 'next/router';
 import NProgress from 'nprogress';
-import {router} from 'next/client';
+import BrandMaterialTheme from '../components/BrandMaterialTheme';
+import {ThemeProvider} from '@mui/material/styles';
 
-router.events.on('routeChangeStart', url => {
+Router.events.on('routeChangeStart', url => {
     NProgress.configure({showSpinner: false}).start();
 });
-router.events.on('routeChangeComplete', url => {
+Router.events.on('routeChangeComplete', url => {
     NProgress.done();
 });
-router.events.on('routeChangeError', url => {
+Router.events.on('routeChangeError', url => {
     NProgress.done();
 });
 
@@ -31,7 +32,9 @@ function MyApp({Component, pageProps}: AppProps) {
             </Head>
             <HeaderNavigator/>
 
-            <Component {...pageProps} />
+            <ThemeProvider theme={BrandMaterialTheme}>
+                <Component {...pageProps} />
+            </ThemeProvider>
 
             <BottomFAB />
             <Footer/>

@@ -15,9 +15,10 @@
 .menuDarker
     background-color: rgba(0, 0, 0, .5) !important
 
-.menuItem
+.menuItemBG
     &.ant-menu-item-selected
-        border-bottom: 2px solid white !important
+        &.ant-menu-item-selected
+            border-bottom: 2px solid white !important
     a
         color: white !important
         &:hover
@@ -25,3 +26,14 @@
     &:hover
         color: white
         border-bottom: 2px solid white !important
+
+.menuItemNoBG
+    &.ant-menu-item-selected
+        border-bottom: 2px solid var(--wedsite-tertiary-colour) !important
+    a
+        color: var(--wedsite-tertiary-colour) !important
+        &:hover
+            color: var(--wedsite-secondary-colour)
+    &:hover
+        color: var(--wedsite-tertiary-colour)
+        border-bottom: 2px solid var(--wedsite-tertiary-colour) !important

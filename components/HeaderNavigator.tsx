@@ -5,6 +5,7 @@ import {useRouter} from 'next/router';
 import styles from '../styles/Header.module.sass';
 import {JSX} from '@babel/types';
 import colours from '../constants/colours';
+import {hexToRgb} from '@mui/system';
 
 /**
  * @type number
@@ -77,6 +78,8 @@ const HeaderNavigator = (): JSX.Element => {
      * @return {JSX.Element}
      */
     const DynamicHeader = (): JSX.Element => {
+        const colourRgbMap = hexToRgb(colours.tertiary).replace(/(^rgb\(|\))/g, '');
+
         return (
             <PageHeader
                 title={<HeaderTitle/>}
@@ -85,8 +88,8 @@ const HeaderNavigator = (): JSX.Element => {
                         isLivestreaming() ?
                             'unset' :
                             isHome() ?
-                            `rgba(0, 0, 0, ${headerTranslucentColor()})` :
-                            'rgba(0, 0, 0, 50%)',
+                            `rgba(${colourRgbMap}, ${headerTranslucentColor()})` :
+                            `rgba(${colourRgbMap}, 90%)`,
                     position: 'relative',
                     height: '100%',
                 }}
@@ -94,7 +97,7 @@ const HeaderNavigator = (): JSX.Element => {
                     <Menu mode={'horizontal'}
                           selectedKeys={[router.pathname]}
                           key={'nav-menu'}
-                          className={`${!isLivestreaming() ? styles.menu : ''}`}
+                          className={styles.menu}
                           style={{
                               // backgroundColor: `rgba(0, 0, 0, ${
                               //     isHome() ? 0.5 - headerTranslucentColor() : '0%'
@@ -102,7 +105,7 @@ const HeaderNavigator = (): JSX.Element => {
                           }}
                     >
                         {/* Live Streaming Route */}
-                        <Menu.Item key={'/livestreaming'} className={!isLivestreaming() ? styles.menuItem : ''}>
+                        <Menu.Item key={'/livestreaming'} className={!isLivestreaming() ? styles.menuItemBG : styles.menuItemNoBG}>
                             <Link href={'/livestreaming'}>
                                 <a>
                                     Livestreaming
@@ -110,7 +113,7 @@ const HeaderNavigator = (): JSX.Element => {
                             </Link>
                         </Menu.Item>
                         {/* Gallery Route */}
-                        <Menu.Item key={'/gallery'} className={!isLivestreaming() ? styles.menuItem : ''}>
+                        <Menu.Item key={'/gallery'} className={!isLivestreaming() ? styles.menuItemBG : styles.menuItemNoBG}>
                             <Link href={'/gallery'}>
                                 <a>
                                     Gallery

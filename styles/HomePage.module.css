@@ -1,9 +1,0 @@
-.imageCover {
-    transform: scale(1.0);
-    object-position: center;
-}
-
-.imageCoverWrapper {
-    position: relative;
-    height: 100%;
-}

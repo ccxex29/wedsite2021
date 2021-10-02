@@ -10,248 +10,121 @@ import {Skeleton, Typography} from 'antd';
 // @ts-ignore
 import Plx from 'react-plx';
 import {Timeline} from '@mui/lab';
-import styles from '../styles/TimelineView.module.css';
+import styles from '../styles/TimelineView.module.sass';
 
 const {Title, Text} = Typography;
 
 const TimelineView = (props: {dimensions: {height: number, width: number}}) => {
     const {dimensions} = props;
 
-    const pTimelineText1 = [
+    const timelineContents = [
         {
-            start: dimensions.height * .6 + 150,
-            duration: 50,
-            properties: [
-                {
-                    startValue: 0,
-                    endValue: 1,
-                    property: 'opacity',
-                },
-            ]
-        }
-    ];
-    const pTimelineText2 = [
+            'title': 'Test1',
+            'body': 'test1',
+        },
         {
-            start: dimensions.height * .6 + 300,
-            duration: 50,
-            properties: [
-                {
-                    startValue: 0,
-                    endValue: 1,
-                    property: 'opacity',
-                },
-            ]
-        }
-    ];
-    const pTimelineText3 = [
-        {
-            start: dimensions.height * .6 + 600,
-            duration: 100,
-            properties: [
-                {
-                    startValue: 0,
-                    endValue: 1,
-                    property: 'opacity',
-                },
-            ]
-        }
-    ];
-    const pTimelineText4 = [
-        {
-            start: dimensions.height * .6 + 800,
-            duration: 100,
-            properties: [
-                {
-                    startValue: 0,
-                    endValue: 1,
-                    property: 'opacity',
-                },
-            ]
-        }
-    ];
+            'title': 'Test2',
+            'body': 'test2',
+        },
+    ]
 
-    const pTimeline1 = [
-        {
+    const TimelineItemComponent = () => {
+        const plxComponents: JSX.Element[] = [];
+        const timings = {
             start: dimensions.height * .6,
-            duration: 50,
-            properties: [
-                {
-                    startValue: 0,
-                    endValue: 1,
-                    property: 'opacity',
-                }
-            ]
-        },
-        {
-            start: dimensions.height * .6 + 50,
-            duration: 100,
-            properties: [
-                {
-                    startValue: 5,
-                    endValue: 200,
-                    property: 'height',
-                },
-            ],
+            dotTimeout: 50,
+            connectorTimeout: 100,
+            textTimeout: 50,
         }
-    ];
-    const pTimeline2 = [
-        {
-            start: dimensions.height * .6 + 200,
-            duration: 50,
-            properties: [
-                {
-                    startValue: 0,
-                    endValue: 1,
-                    property: 'opacity',
+        const decorationWait = timings.dotTimeout + timings.connectorTimeout;
+
+        timelineContents.forEach((data, index) => {
+            const content = (mode: string) => {
+                if (mode === 'opposite' && !(index & 1)) {
+                    return null;
+                } else if (mode === 'normal' && (index & 1)) {
+                    return null;
                 }
-            ]
-        },
-        {
-            start: dimensions.height * .6 + 300,
-            duration: 100,
-            properties: [
-                {
-                    startValue: 5,
-                    endValue: 200,
-                    property: 'height',
-                },
-            ],
-        }
-    ];
-    const pTimeline3 = [
-        {
-            start: dimensions.height * .6 + 400,
-            duration: 100,
-            properties: [
-                {
-                    startValue: 0,
-                    endValue: 1,
-                    property: 'opacity',
-                }
-            ]
-        },
-        {
-            start: dimensions.height * .6 + 500,
-            duration: 100,
-            properties: [
-                {
-                    startValue: 5,
-                    endValue: 200,
-                    property: 'height',
-                },
-            ],
-        }
-    ];
-    const pTimeline4 = [
-        {
-            start: dimensions.height * .6 + 600,
-            duration: 100,
-            properties: [
-                {
-                    startValue: 0,
-                    endValue: 1,
-                    property: 'opacity',
-                }
-            ]
-        },
-        {
-            start: dimensions.height * .6 + 700,
-            duration: 100,
-            properties: [
-                {
-                    startValue: 5,
-                    endValue: 200,
-                    property: 'height',
-                },
-            ],
-        }
-    ];
+                return (
+                    <Plx
+                        key={`tl-our-story-content-${index}`}
+                        parallaxData={[
+                            {
+                                start: timings.start + ((index + 1) * decorationWait),
+                                duration: timings.textTimeout,
+                                properties: [
+                                    {
+                                        startValue: 0,
+                                        endValue: 1,
+                                        property: 'opacity',
+                                    },
+                                ]
+                            },
+                        ]}
+                        className={styles.timelineItemDefaults}
+                    >
+                        <Title level={5}>
+                            {data.title || ''}
+                        </Title>
+                        <Text>
+                            {data.body || ''}
+                        </Text>
+                    </Plx>
+                );
+            }
+
+            plxComponents.push(
+                <Plx
+                    key={`tl-our-story-${index}`}
+                    className={styles.timelineItemWrapperParallaxDefault}
+                    parallaxData={[
+                        {
+                            start: timings.start + (index * decorationWait),
+                            duration: timings.dotTimeout,
+                            properties: [
+                                {
+                                    startValue: 0,
+                                    endValue: 1,
+                                    property: 'opacity',
+                                },
+                            ]
+                        },
+                        {
+                            start: timings.start + (index * decorationWait) + timings.dotTimeout,
+                            duration: timings.connectorTimeout,
+                            properties: [
+                                {
+                                    startValue: 5,
+                                    endValue: 200,
+                                    property: 'height',
+                                },
+                            ]
+                        },
+                    ]}
+                >
+                    <TimelineItem className={styles.timelineItemWrapper}>
+                        <TimelineOppositeContent>
+                            {content('opposite')}
+                        </TimelineOppositeContent>
+                        <TimelineSeparator>
+                            <TimelineDot/>
+                            <TimelineConnector/>
+                        </TimelineSeparator>
+                        <TimelineContent>
+                            {content('normal')}
+                        </TimelineContent>
+                    </TimelineItem>
+                </Plx>
+            );
+        });
+
+        return plxComponents;
+    }
 
     return (
         <div style={{minHeight: 600}}>
             <Timeline>
-                <Plx
-                    className={styles.timelineItemWrapperParallaxDefault}
-                    parallaxData={pTimeline1}
-                >
-                    <TimelineItem className={styles.timelineItemWrapper}>
-                        <TimelineSeparator>
-                            <TimelineDot />
-                            <TimelineConnector />
-                        </TimelineSeparator>
-                        <TimelineContent>
-                            <Plx
-                                key={'tl-1'}
-                                parallaxData={pTimelineText1}
-                                className={styles.timelineItemDefaults}
-                            >
-                                <Text>
-                                    <Skeleton active />
-                                </Text>
-                            </Plx>
-                        </TimelineContent>
-                    </TimelineItem>
-                </Plx>
-                <Plx
-                    className={styles.timelineItemWrapperParallaxDefault}
-                    parallaxData={pTimeline2}
-                >
-                    <TimelineItem className={styles.timelineItemWrapper}>
-                        <TimelineOppositeContent>
-                            <Plx
-                                key={'tl-2'}
-                                parallaxData={pTimelineText2}
-                                className={styles.timelineItemDefaults}
-                            >
-                                <Text>
-                                    <Skeleton active />
-                                </Text>
-                            </Plx>
-                        </TimelineOppositeContent>
-                        <TimelineSeparator>
-                            <TimelineDot />
-                            <TimelineConnector />
-                        </TimelineSeparator>
-                        <TimelineContent>
-                        </TimelineContent>
-                    </TimelineItem>
-                </Plx>
-                {/*<TimelineItem className={styles.timelineItemWrapper}>*/}
-                {/*    <TimelineSeparator>*/}
-                {/*        <TimelineDot />*/}
-                {/*        <TimelineConnector />*/}
-                {/*    </TimelineSeparator>*/}
-                {/*    <TimelineContent>*/}
-                {/*        <Plx*/}
-                {/*            key={'tl-3'}*/}
-                {/*            parallaxData={pTimeline3}*/}
-                {/*            className={styles.timelineItemDefaults}*/}
-                {/*        >*/}
-                {/*            <Text style={{textAlign: 'right'}}>*/}
-                {/*                <Skeleton active />*/}
-                {/*            </Text>*/}
-                {/*        </Plx>*/}
-                {/*    </TimelineContent>*/}
-                {/*</TimelineItem>*/}
-                {/*<TimelineItem className={styles.timelineItemWrapper}>*/}
-                {/*    <TimelineOppositeContent>*/}
-                {/*        <Plx*/}
-                {/*            key={'tl-4'}*/}
-                {/*            parallaxData={pTimeline4}*/}
-                {/*            className={styles.timelineItemDefaults}*/}
-                {/*        >*/}
-                {/*            <Text>*/}
-                {/*                <Skeleton active />*/}
-                {/*            </Text>*/}
-                {/*        </Plx>*/}
-                {/*    </TimelineOppositeContent>*/}
-                {/*    <TimelineSeparator>*/}
-                {/*        <TimelineDot />*/}
-                {/*        <TimelineConnector />*/}
-                {/*    </TimelineSeparator>*/}
-                {/*    <TimelineContent>*/}
-                {/*    </TimelineContent>*/}
-                {/*</TimelineItem>*/}
+                { TimelineItemComponent() }
             </Timeline>
         </div>
     );

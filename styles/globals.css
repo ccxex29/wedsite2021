@@ -1,26 +1,53 @@
 @import url('https://rsms.me/inter/inter.css');
-html { font-family: 'Inter', sans-serif; }
+
+html {
+    font-family: 'Inter', sans-serif;
+}
+
 @supports (font-variation-settings: normal) {
-  html { font-family: 'Inter var', sans-serif; }
+    html {
+        font-family: 'Inter var', sans-serif;
+    }
 }
 
 html,
 body {
-  padding: 0;
-  margin: 0;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    padding: 0;
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+    color: inherit;
+    text-decoration: none;
 }
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
+:root {
+    --wedsite-primary-colour: #ADC69C;
+    --wedsite-secondary-colour: #8EB380;
+    --wedsite-tertiary-colour: #59754C;
+    --wedsite-white: #FFF;
+}
+
+[class*="Header_menuItemBG"].ant-menu-item-selected {
+    border-bottom: 2px solid white !important;
+}
+
+[class*="Header_menuItemNoBG"].ant-menu-item-selected {
+    border-bottom: 2px solid var(--wedsite-tertiary-colour) !important;
+}
+
+#nprogress .bar {
+    background-color: var(--wedsite-primary-colour);
+}
+#nprogress .peg {
+    box-shadow: 0 0 10px var(--wedsite-secondary-colour), 0 0 5px var(--wedsite-primary-colour);
+}
 
 /*li.ant-menu-item:hover {*/
 /*  color: white !important;*/

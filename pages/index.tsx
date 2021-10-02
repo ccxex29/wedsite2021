@@ -2,12 +2,14 @@ import {useEffect, useState} from 'react';
 import {Typography, Row, Col} from 'antd';
 import Image from 'next/image';
 import sunflower from '../public/gallery-images/HAN_8747.jpg';
-import styles from '../styles/HomePage.module.css';
+import styles from '../styles/HomePage.module.sass';
 // @ts-ignore
 import Plx from 'react-plx';
 import TimelineView from '../components/TimelineView';
+import InvitationSection from '../components/InvitationSection';
 
-const {Title} = Typography;
+const {Title, Text} = Typography;
+
 
 
 const Home = (): JSX.Element => {
@@ -108,8 +110,13 @@ const Home = (): JSX.Element => {
                 <Title level={1} style={{textAlign: 'center', marginBottom: 75}}>Our Story</Title>
                 <TimelineView dimensions={dimensions} />
             </section>
-            <section style={{height: '200vh'}}>
-                <div>emptiness</div>
+            <section className={styles.welcomeInvitation}>
+                <div>
+                    <Text>Wherever you are, we delightfully invite you to witness our vows and share the joy with us virtually</Text>
+                </div>
+            </section>
+            <section>
+                <InvitationSection />
             </section>
         </main>
     )
