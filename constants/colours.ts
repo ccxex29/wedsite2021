@@ -1,4 +1,3 @@
-import style from 'sass-extract-loader!'
 export default {
     'primary': '#6E887F',
     'secondary': '#5B7B76',

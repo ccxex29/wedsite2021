@@ -10,6 +10,8 @@ import Router from 'next/router';
 import NProgress from 'nprogress';
 import BrandMaterialTheme from '../components/BrandMaterialTheme';
 import {ThemeProvider} from '@mui/material/styles';
+import {useEffect, useState} from 'react';
+import {height} from '@mui/system';
 
 Router.events.on('routeChangeStart', url => {
     NProgress.configure({showSpinner: false}).start();
@@ -22,6 +24,25 @@ Router.events.on('routeChangeError', url => {
 });
 
 function MyApp({Component, pageProps}: AppProps) {
+    // const [dimensions, setDimensions] = useState({
+    //     width: 0,
+    //     height: 0,
+    // });
+    // useEffect(() => {
+    //     trackDimensions();
+    //     window.addEventListener('resize', trackDimensions);
+    //     return () => {
+    //         window.removeEventListener('resize', trackDimensions);
+    //     }
+    // }, [])
+    // const trackDimensions = () => {
+    //     setDimensions({
+    //         width: window.innerWidth,
+    //         height: window.innerHeight,
+    //     });
+    //     console.log(dimensions, window.innerWidth, window.innerHeight);
+    // };
+
     return (
         <div className={styles.container}>
             <Head>

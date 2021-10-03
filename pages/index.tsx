@@ -3,6 +3,7 @@ import {Typography, Row, Col} from 'antd';
 import Image from 'next/image';
 import sunflower from '../public/gallery-images/HAN_8747.jpg';
 import styles from '../styles/HomePage.module.sass';
+import dimensionsType from '../constants/types/dimensionsType';
 // @ts-ignore
 import Plx from 'react-plx';
 import TimelineView from '../components/TimelineView';
@@ -11,12 +12,25 @@ import InvitationSection from '../components/InvitationSection';
 const {Title, Text} = Typography;
 
 
-
 const Home = (): JSX.Element => {
     const [dimensions, setDimensions] = useState({
         width: 0,
         height: 0,
     });
+    useEffect(() => {
+        trackDimensions();
+        window.addEventListener('resize', trackDimensions);
+        return () => {
+            window.removeEventListener('resize', trackDimensions);
+        }
+    }, [])
+    const trackDimensions = () => {
+        setDimensions({
+            width: window.innerWidth,
+            height: window.innerHeight,
+        });
+        console.log(dimensions, window.innerWidth, window.innerHeight);
+    };
     const parallaxImgCoverData = [
         {
             start: 0,
@@ -41,21 +55,6 @@ const Home = (): JSX.Element => {
             ]
         }
     ];
-
-    useEffect(() => {
-        trackDimensions();
-        document.addEventListener('resize', trackDimensions);
-        return () => {
-            document.removeEventListener('resize', trackDimensions);
-        }
-    }, []);
-
-    const trackDimensions = async () => {
-        setDimensions({
-            width: window.innerWidth,
-            height: window.innerHeight,
-        });
-    };
 
     return (
         <main>

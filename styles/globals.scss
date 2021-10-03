@@ -33,14 +33,14 @@ a {
 }
 
 [class*="Header_menuItemNoBG"].ant-menu-item-selected {
-    border-bottom: 2px solid var(--wedsite-tertiary-colour) !important;
+    border-bottom: 2px solid var(--wedsite-tertiary) !important;
 }
 
 #nprogress .bar {
-    background-color: var(--wedsite-primary-colour);
+    background-color: var(--wedsite-primary);
 }
 #nprogress .peg {
-    box-shadow: 0 0 10px var(--wedsite-secondary-colour), 0 0 5px var(--wedsite-primary-colour);
+    box-shadow: 0 0 10px var(--wedsite-secondary), 0 0 5px var(--wedsite-primary);
 }
 
 /*li.ant-menu-item:hover {*/

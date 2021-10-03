@@ -1,52 +1,104 @@
-import Image from 'next/image';
-import {ImageList, ImageListItem} from '@mui/material';
+import {Image} from 'antd';
+import {ImageList, ImageListItem, Skeleton} from '@mui/material';
 import styles from '../styles/Gallery.module.sass';
-import han from '../public/HAN_8770.jpg';
-import hon from '../public/gallery-images/BUD_5687.jpg';
-import hen from '../public/gallery-images/BUD_5916.jpg';
-import hun from '../public/gallery-images/BUD_5998.jpg';
-import hin from '../public/gallery-images/BUD_5929.jpg';
-import hbn from '../public/gallery-images/BUD_6170.jpg';
+import axios from 'axios';
+import {useEffect, useState} from 'react';
+import Masonry from '@mui/lab/Masonry';
+import MasonryItem from '@mui/lab/MasonryItem';
+import dimensionsType from '../constants/types/dimensionsType';
 
 const gallery = (): JSX.Element => {
-    const GetImages = async () => {
-        const imgComponentList: JSX.Element[] = [];
-        const imgsPath = '../public/gallery-images';
-        const images = require.context('../public/gallery-images', false, /\.(png|jpe?g|webp)$/).keys();
-        for (const path of images) {
-            const index: number = images.indexOf(path);
-            const img = await import(`${imgsPath}/${path}`);
-            imgComponentList.push(
-                <ImageListItem key={`image-gallery-${index}`}>
-                    <Image src={img} layout={'fill'} />
-                </ImageListItem>
-            )
+    const [loading, setLoading] = useState(true);
+    const [imagePaths, setImagePaths] = useState([]);
+    const [dimensions, setDimensions] = useState({
+        width: 0,
+        height: 0,
+    });
+    useEffect(() => {
+        trackDimensions();
+        window.addEventListener('resize', trackDimensions);
+        return () => {
+            window.removeEventListener('resize', trackDimensions);
         }
-        return imgComponentList;
+    }, [])
+    const trackDimensions = () => {
+        setDimensions({
+            width: window.innerWidth,
+            height: window.innerHeight,
+        });
+        console.log(dimensions, window.innerWidth, window.innerHeight);
+    };
+
+    useEffect(() => {
+        if (loading) {
+            GetImages();
+        }
+    }, []);
+
+    const GetImages = () => {
+        axios.get('/api/list-gallery-images')
+            .then(res => {
+                if (res.data.data) {
+                    setImagePaths(res.data.data);
+                }
+            })
+            .catch(err => {
+            })
+            .finally(() => {
+                setLoading(false)
+            })
     }
+
+    const GetImageListItems = () => {
+        if (!imagePaths) {
+            return <></>;
+        }
+        return imagePaths.map(imagePath => (
+            <ImageListItem key={imagePath}>
+                <Image
+                    src={`https://cdn.femmund.com/file/femmund-cdn/${imagePath}`}
+                />
+            </ImageListItem>
+        ));
+    }
+
     return (
         <main className={styles.cover}>
-            <ImageList variant={'masonry'} cols={3} gap={8}>
-                <ImageListItem>
-                    <Image src={han} />
-                </ImageListItem>
-                <ImageListItem>
-                    <Image src={hon} />
-                </ImageListItem>
-                <ImageListItem>
-                    <Image src={hun} />
-                </ImageListItem>
-                <ImageListItem>
-                    <Image src={hbn} />
-                </ImageListItem>
-                <ImageListItem>
-                    <Image src={hen} />
-                </ImageListItem>
-                <ImageListItem>
-                    <Image src={hin} />
-                </ImageListItem>
-                {/*{ GetImages() }*/}
-            </ImageList>
+            {
+                loading ?
+                    (
+                        <Masonry columns={dimensions.height > dimensions.width ? 3 : 4} spacing={8}>
+                            <MasonryItem>
+                                <Skeleton variant={'rectangular'} width={400} height={400} />
+                            </MasonryItem>
+                            <MasonryItem>
+                                <Skeleton variant={'rectangular'} width={400} height={400} />
+                            </MasonryItem>
+                            <MasonryItem>
+                                <Skeleton variant={'rectangular'} width={400} height={400} />
+                            </MasonryItem>
+                            <MasonryItem>
+                                <Skeleton variant={'rectangular'} width={400} height={400} />
+                            </MasonryItem>
+                            <MasonryItem>
+                                <Skeleton variant={'rectangular'} width={400} height={400} />
+                            </MasonryItem>
+                            <MasonryItem>
+                                <Skeleton variant={'rectangular'} width={400} height={400} />
+                            </MasonryItem>
+                            <MasonryItem>
+                                <Skeleton variant={'rectangular'} width={400} height={400} />
+                            </MasonryItem>
+                            <MasonryItem>
+                                <Skeleton variant={'rectangular'} width={400} height={400} />
+                            </MasonryItem>
+                        </Masonry>
+                    ) : (
+                        <ImageList variant={'masonry'} cols={4} gap={8} className={styles.galleryThumbs}>
+                            { GetImageListItems() }
+                        </ImageList>
+                    )
+            }
         </main>
     );
 }
