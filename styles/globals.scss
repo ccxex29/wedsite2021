@@ -1,3 +1,4 @@
+@use "../constants/colours";
 @import url('https://rsms.me/inter/inter.css');
 
 html {
@@ -25,13 +26,6 @@ a {
 
 * {
     box-sizing: border-box;
-}
-
-:root {
-    --wedsite-primary-colour: #ADC69C;
-    --wedsite-secondary-colour: #8EB380;
-    --wedsite-tertiary-colour: #59754C;
-    --wedsite-white: #FFF;
 }
 
 [class*="Header_menuItemBG"].ant-menu-item-selected {

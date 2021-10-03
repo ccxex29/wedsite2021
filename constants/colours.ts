@@ -1,6 +1,7 @@
+import style from 'sass-extract-loader!'
 export default {
-    'primary': '#ADC69C',
-    'secondary': '#8EB380',
-    'tertiary': '#59754C',
-    'white': '#FFF',
+    'primary': '#6E887F',
+    'secondary': '#5B7B76',
+    'tertiary': '#55776A',
+    'white': '#EDF4F0',
 }
