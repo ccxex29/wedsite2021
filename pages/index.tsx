@@ -18,19 +18,20 @@ const Home = (): JSX.Element => {
         height: 0,
     });
     useEffect(() => {
+        const trackDimensions = () => {
+            setDimensions({
+                width: window.innerWidth,
+                height: window.innerHeight,
+            });
+            console.log(dimensions, window.innerWidth, window.innerHeight);
+        };
         trackDimensions();
         window.addEventListener('resize', trackDimensions);
         return () => {
             window.removeEventListener('resize', trackDimensions);
         }
-    }, [])
-    const trackDimensions = () => {
-        setDimensions({
-            width: window.innerWidth,
-            height: window.innerHeight,
-        });
-        console.log(dimensions, window.innerWidth, window.innerHeight);
-    };
+    }, []);
+
     const parallaxImgCoverData = [
         {
             start: 0,

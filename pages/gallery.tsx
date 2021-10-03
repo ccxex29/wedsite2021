@@ -7,33 +7,15 @@ import Masonry from '@mui/lab/Masonry';
 import MasonryItem from '@mui/lab/MasonryItem';
 import dimensionsType from '../constants/types/dimensionsType';
 
-const gallery = (): JSX.Element => {
+const Gallery = (): JSX.Element => {
     const [loading, setLoading] = useState(true);
     const [imagePaths, setImagePaths] = useState([]);
-    const [dimensions, setDimensions] = useState({
-        width: 0,
-        height: 0,
-    });
-    useEffect(() => {
-        trackDimensions();
-        window.addEventListener('resize', trackDimensions);
-        return () => {
-            window.removeEventListener('resize', trackDimensions);
-        }
-    }, [])
-    const trackDimensions = () => {
-        setDimensions({
-            width: window.innerWidth,
-            height: window.innerHeight,
-        });
-        console.log(dimensions, window.innerWidth, window.innerHeight);
-    };
 
     useEffect(() => {
         if (loading) {
             GetImages();
         }
-    }, []);
+    }, [loading]);
 
     const GetImages = () => {
         axios.get('/api/list-gallery-images')
@@ -67,7 +49,7 @@ const gallery = (): JSX.Element => {
             {
                 loading ?
                     (
-                        <Masonry columns={dimensions.height > dimensions.width ? 3 : 4} spacing={8}>
+                        <Masonry columns={4} spacing={8}>
                             <MasonryItem>
                                 <Skeleton variant={'rectangular'} width={400} height={400} />
                             </MasonryItem>
@@ -103,4 +85,4 @@ const gallery = (): JSX.Element => {
     );
 }
 
-export default gallery;
+export default Gallery;
