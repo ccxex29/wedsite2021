@@ -1,13 +1,12 @@
 import {useEffect, useState} from 'react';
 import {Typography, Row, Col} from 'antd';
 import Image from 'next/image';
-import sunflower from '../public/gallery-images/HAN_8747.jpg';
 import styles from '../styles/HomePage.module.sass';
 import dimensionsType from '../constants/types/dimensionsType';
-// @ts-ignore
-import Plx from 'react-plx';
 import TimelineView from '../components/TimelineView';
 import InvitationSection from '../components/InvitationSection';
+// @ts-ignore
+import Plx from 'react-plx';
 
 const {Title, Text} = Typography;
 
@@ -71,13 +70,14 @@ const Home = (): JSX.Element => {
                 >
                     <Image
                         className={styles.imageCover}
-                        src={sunflower}
+                        src={'wedsite2021/HAN_8747.jpg'}
+                        // blurDataURL={'https://imgix.femmund.com/wedsite2021/HAN_8747.jpg?w=100'}
                         layout={'fill'}
                         objectFit={'cover'}
-                        placeholder={'blur'}
-                        priority={true}
-                        quality={87}
-                        alt={'Image description'}
+                        // placeholder={'blur'}
+                        // priority={true}
+                        // quality={87}
+                        alt={''}
                     />
                 </Plx>
                     <Row justify={'center'} align={'middle'} style={{
@@ -121,5 +121,15 @@ const Home = (): JSX.Element => {
         </main>
     )
 };
+
+// export const getStaticProps: GetStaticProps = async () => {
+//     let imageCover: any = await axios.get('https://imgix.femmund.com/wedsite2021/HAN_8747.jpg', {responseType: 'arraybuffer'});
+//     imageCover = Buffer.from(imageCover.data).toString('base64');
+//     return {
+//         props: {
+//             imageCover,
+//         }
+//     }
+// }
 
 export default Home;

@@ -2,6 +2,7 @@ import {Typography} from 'antd';
 import {ThemeProvider} from '@mui/material/styles';
 import {Button} from '@mui/material';
 import styles from '../styles/InvitationSection.module.sass';
+import Link from 'next/link';
 import BrandMaterialTheme from './BrandMaterialTheme';
 
 const {Title, Text} = Typography;
@@ -14,7 +15,11 @@ const InvitationSection = () => {
                 Friday, 11 November 2021<br/>
                 11 PM (GMT+7)
             </Title>
-            <Button color={'tertiary'} variant={'contained'} style={{marginTop: '3rem'}}>JOIN US</Button>
+            <Link href={'/livestreaming'}>
+                <a>
+                <Button color={'tertiary'} variant={'contained'} style={{marginTop: '3rem'}}>JOIN US</Button>
+                </a>
+            </Link>
         </div>
     );
 };

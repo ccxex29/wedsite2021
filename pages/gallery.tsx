@@ -9,6 +9,10 @@ import dimensionsType from '../constants/types/dimensionsType';
 
 const Gallery = (): JSX.Element => {
     const [loading, setLoading] = useState(true);
+    const [errorMessage, setErrorMessage] = useState({
+        isError: false,
+        message: '',
+    });
     const [imagePaths, setImagePaths] = useState([]);
 
     useEffect(() => {
@@ -25,6 +29,11 @@ const Gallery = (): JSX.Element => {
                 }
             })
             .catch(err => {
+                let errMsg = err.response.data.message || 'Unknown error occurred';
+                setErrorMessage({
+                    isError: true,
+                    message: errMsg,
+                });
             })
             .finally(() => {
                 setLoading(false)
@@ -36,9 +45,12 @@ const Gallery = (): JSX.Element => {
             return <></>;
         }
         return imagePaths.map(imagePath => (
-            <ImageListItem key={imagePath}>
+            <ImageListItem key={imagePath} className={styles.galleryThumb}>
                 <Image
-                    src={`https://cdn.femmund.com/file/femmund-cdn/${imagePath}`}
+                    src={`https://imgix.femmund.com/${imagePath}`}
+                    placeholder={
+                        <Image style={{width: '100%', height: '100%'}} src={`https://imgix.femmund.com/${imagePath}?w=50&blur=50&q=87`} />
+                    }
                 />
             </ImageListItem>
         ));

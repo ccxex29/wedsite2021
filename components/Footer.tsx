@@ -4,17 +4,19 @@ import {HeartFilled} from '@ant-design/icons';
 const Footer = (): JSX.Element => {
     return (
         <footer className={styles.footer}>
-            <a
-                target="_blank"
-                rel="noopener noreferrer"
+            <p
+                // target="_blank"
+                // rel="noopener noreferrer"
                 style={{
-                    color: 'unset'
                 }}
             >
                 Created with&nbsp;
                 <HeartFilled style={{color: 'red'}} />
                 &nbsp;by Louis Raymond
-            </a>
+            </p>
+            <p>
+                Powered by Next.js, Cloudflare, Backblaze, Imgix and Netlify
+            </p>
         </footer>
     );
 };

@@ -28,6 +28,10 @@ a {
     box-sizing: border-box;
 }
 
+::selection {
+    background: var(--wedsite-primary);
+}
+
 [class*="Header_menuItemBG"].ant-menu-item-selected {
     border-bottom: 2px solid white !important;
 }
@@ -41,6 +45,14 @@ a {
 }
 #nprogress .peg {
     box-shadow: 0 0 10px var(--wedsite-secondary), 0 0 5px var(--wedsite-primary);
+}
+
+.ant-image-placeholder, .ant-image-placeholder * {
+    width: 100% !important
+}
+
+.ant-back-top-icon {
+    background: var(--wedsite-secondary);
 }
 
 /*li.ant-menu-item:hover {*/

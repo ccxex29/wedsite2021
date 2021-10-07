@@ -61,7 +61,7 @@ const HeaderNavigator = (): JSX.Element => {
                        transition: 'color 0.5s ease-in',
                    }}>
                     Fec
-                    <span style={{color: colours.primary}}>{andText}</span>
+                    <span className={styles.undText}>{andText}</span>
                     Grace
                 </a>
             </Link>
@@ -134,13 +134,14 @@ const HeaderNavigator = (): JSX.Element => {
     }
 
     return (
-        <Affix offsetTop={0} style={{
-            position: isHome() ? 'absolute' : 'relative',
+        <div style={{
+            position: 'fixed',
             width: '100%',
             zIndex: 99,
+            top: 0,
         }}>
             <DynamicHeader/>
-        </Affix>
+        </div>
     );
 };
 
