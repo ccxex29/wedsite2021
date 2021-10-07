@@ -2,13 +2,14 @@ import {useEffect, useState} from 'react';
 import {Typography, Row, Col} from 'antd';
 import Image from 'next/image';
 import styles from '../styles/HomePage.module.sass';
-import dimensionsType from '../constants/types/dimensionsType';
 import TimelineView from '../components/TimelineView';
 import InvitationSection from '../components/InvitationSection';
+import colours from '../constants/colours';
 // @ts-ignore
 import Plx from 'react-plx';
+import NProgress from 'nprogress';
 
-const {Title, Text} = Typography;
+const {Title} = Typography;
 
 
 const Home = (): JSX.Element => {
@@ -16,19 +17,20 @@ const Home = (): JSX.Element => {
         width: 0,
         height: 0,
     });
+
     useEffect(() => {
         const trackDimensions = () => {
             setDimensions({
                 width: window.innerWidth,
                 height: window.innerHeight,
             });
-            console.log(dimensions, window.innerWidth, window.innerHeight);
         };
         trackDimensions();
-        window.addEventListener('resize', trackDimensions);
-        return () => {
-            window.removeEventListener('resize', trackDimensions);
-        }
+        NProgress.done();
+        // window.addEventListener('resize', trackDimensions);
+        // return () => {
+        //     window.removeEventListener('resize', trackDimensions);
+        // }
     }, []);
 
     const parallaxImgCoverData = [
@@ -106,13 +108,14 @@ const Home = (): JSX.Element => {
             <section id={'section-our-story'} style={{
                 position: 'relative',
                 padding: 100,
+                backgroundColor: colours.white,
             }}>
                 <Title level={1} style={{textAlign: 'center', marginBottom: 75}}>Our Story</Title>
                 <TimelineView dimensions={dimensions} />
             </section>
             <section className={styles.welcomeInvitation}>
                 <div>
-                    <Text>Wherever you are, we delightfully invite you to witness our vows and share the joy with us virtually</Text>
+                    <span>Wherever you are, we delightfully invite you to witness our vows and share the joy with us virtually</span>
                 </div>
             </section>
             <section>

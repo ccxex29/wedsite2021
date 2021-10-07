@@ -61,7 +61,7 @@ const HeaderNavigator = (): JSX.Element => {
                        transition: 'color 0.5s ease-in',
                    }}>
                     Fec
-                    <span className={styles.undText}>{andText}</span>
+                    <span className={styles.undText} style={isLivestreaming() ? {color: colours.accent} : {}}>{andText}</span>
                     Grace
                 </a>
             </Link>

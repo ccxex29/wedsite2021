@@ -16,7 +16,7 @@ body {
     padding: 0;
     margin: 0;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif !important;
 }
 
 a {
@@ -41,10 +41,10 @@ a {
 }
 
 #nprogress .bar {
-    background-color: var(--wedsite-primary);
+    background-color: var(--wedsite-accent);
 }
 #nprogress .peg {
-    box-shadow: 0 0 10px var(--wedsite-secondary), 0 0 5px var(--wedsite-primary);
+    box-shadow: 0 0 10px var(--wedsite-accent), 0 0 5px var(--wedsite-white);
 }
 
 .ant-image-placeholder, .ant-image-placeholder * {

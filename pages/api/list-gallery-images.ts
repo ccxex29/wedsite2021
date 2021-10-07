@@ -1,5 +1,7 @@
 import B2 from 'backblaze-b2';
 import {RateLimiterMemory} from 'rate-limiter-flexible';
+import Cors from '../../components/Cors';
+import {NextApiRequest, NextApiResponse} from 'next';
 
 type bucketResponseCacheType = {
     data: Array<any>|undefined,
@@ -8,8 +10,8 @@ type bucketResponseCacheType = {
 }
 
 const rateLimiter = new RateLimiterMemory({
-    points: 5,
-    duration: 10,
+    points: 20,
+    duration: 60,
 });
 
 const bucketResponseCache: bucketResponseCacheType = {
@@ -18,12 +20,39 @@ const bucketResponseCache: bucketResponseCacheType = {
     ttl: 1000 * 60 * 30, // 30 minutes
 };
 
-export default async function handler(req: any, res: any) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    const cors = await Cors(req, res);
+    console.log(cors);
+
+    if (req.method !== 'GET') {
+        return res.status(405).json({
+            result: 'failure',
+            message: 'Method not allowed'
+        });
+    }
+
     const appKey = process.env.B2_APPLICATION_KEY;
     const appKeyId = process.env.B2_APPLICATION_KEY_ID;
     const bucketId = process.env.B2_BUCKET_ID;
 
-    const clientIp = req.headers['cf-connecting-ip'] || req.headers['true-client-ip'] || (req.headers['x-forwarded-for'] && req.headers['x-forwarded-for'].split(/, ?/)[0]) || req.connection.remoteAddress;
+    type getHeaderValueFn = string|undefined;
+    const getXForwardedForHeader = (): getHeaderValueFn => {
+        if (typeof req.headers['x-forwarded-for'] === 'string' || req.headers['x-forwarded-for'] instanceof String) {
+            return req.headers['x-forwarded-for'].split(/, ?/)[0] || undefined;
+        } else if (Array.isArray(req.headers['x-forwarded-for'])) {
+            return req.headers['x-forwarded-for'][0] || undefined;
+        }
+        return undefined;
+    }
+    const getCloudflareHeader = (): getHeaderValueFn => {
+        if (typeof req.headers['cf-connecting-ip'] === 'string' || req.headers['cf-connecting-ip'] instanceof String) {
+            return <string | undefined> req.headers['cf-connecting-ip'];
+        } else if (typeof req.headers['true-client-ip'] === 'string' || req.headers['true-client-ip'] instanceof String) {
+            return <string | undefined> req.headers['true-client-ip'];
+        }
+    }
+
+    const clientIp: string|undefined = getCloudflareHeader() || getXForwardedForHeader() || req.connection.remoteAddress;
 
     if (!clientIp) {
         return res.status(500).json({
@@ -58,7 +87,7 @@ export default async function handler(req: any, res: any) {
                     retries: 5,
                 },
             });
-            return new Promise<void>((resolve, reject) => {
+            return new Promise<void>((resolve) => {
                 b2.authorize()
                     .then(() => {
                         b2.listFileNames({

@@ -1,7 +1,9 @@
 import styles from '../styles/Livestreaming.module.sass';
 import {Alert, Snackbar} from '@mui/material';
+import NProgress from 'nprogress';
 
 const livestreaming = (): JSX.Element => {
+    NProgress.done();
     const contentId = 'dQw4w9WgXcQ';
     return (
         <main className={styles.cover}>

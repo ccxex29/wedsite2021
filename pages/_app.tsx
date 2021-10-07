@@ -10,38 +10,17 @@ import Router from 'next/router';
 import NProgress from 'nprogress';
 import BrandMaterialTheme from '../components/BrandMaterialTheme';
 import {ThemeProvider} from '@mui/material/styles';
-import {useEffect, useState} from 'react';
-import {height} from '@mui/system';
 
-Router.events.on('routeChangeStart', url => {
+Router.events.on('routeChangeStart', () => {
     NProgress.configure({showSpinner: false}).start();
 });
-Router.events.on('routeChangeComplete', url => {
-    NProgress.done();
+Router.events.on('routeChangeComplete', () => {
 });
-Router.events.on('routeChangeError', url => {
+Router.events.on('routeChangeError', () => {
     NProgress.done();
 });
 
 function MyApp({Component, pageProps}: AppProps) {
-    // const [dimensions, setDimensions] = useState({
-    //     width: 0,
-    //     height: 0,
-    // });
-    // useEffect(() => {
-    //     trackDimensions();
-    //     window.addEventListener('resize', trackDimensions);
-    //     return () => {
-    //         window.removeEventListener('resize', trackDimensions);
-    //     }
-    // }, [])
-    // const trackDimensions = () => {
-    //     setDimensions({
-    //         width: window.innerWidth,
-    //         height: window.innerHeight,
-    //     });
-    //     console.log(dimensions, window.innerWidth, window.innerHeight);
-    // };
 
     return (
         <div className={styles.container}>
@@ -61,6 +40,6 @@ function MyApp({Component, pageProps}: AppProps) {
             <Footer/>
         </div>
     );
-};
+}
 
 export default MyApp;
