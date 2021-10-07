@@ -23,7 +23,9 @@ export default async function handler(req: any, res: any) {
     const appKeyId = process.env.B2_APPLICATION_KEY_ID;
     const bucketId = process.env.B2_BUCKET_ID;
 
-    if (!req.connection.remoteAddress) {
+    const clientIp = req.headers['cf-connecting-ip'] || req.headers['true-client-ip'] || (req.headers['x-forwarded-for'] && req.headers['x-forwarded-for'].split(/, ?/)[0]) || req.connection.remoteAddress;
+
+    if (!clientIp) {
         return res.status(500).json({
             result: 'failure',
             message: 'Unable to resolve client\'s IP address'
@@ -31,7 +33,7 @@ export default async function handler(req: any, res: any) {
     }
 
     try {
-        await rateLimiter.consume(req.address, 1);
+        await rateLimiter.consume(clientIp, 1);
     } catch (error) {
         return res.status(429).json({
             result: 'failure',
