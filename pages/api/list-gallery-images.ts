@@ -4,8 +4,8 @@ import Cors from '../../components/Cors';
 import {NextApiRequest, NextApiResponse} from 'next';
 
 type bucketResponseCacheType = {
-    data: Array<any>|undefined,
-    lastCached: number|undefined,
+    data?: Array<any>,
+    lastCached?: number,
     ttl: number,
 }
 
@@ -21,8 +21,7 @@ const bucketResponseCache: bucketResponseCacheType = {
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const cors = await Cors(req, res);
-    console.log(cors);
+    await Cors(req, res);
 
     if (req.method !== 'GET') {
         return res.status(405).json({

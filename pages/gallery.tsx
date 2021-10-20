@@ -1,4 +1,4 @@
-import {Image as AntdImage} from 'antd';
+import AntdImage from 'antd/lib/image';
 import {Alert, ImageList, ImageListItem, Skeleton} from '@mui/material';
 import styles from '../styles/Gallery.module.sass';
 import axios from 'axios';
@@ -16,17 +16,31 @@ const Gallery = (): JSX.Element => {
     const [imagePaths, setImagePaths] = useState<Array<string>>([]);
 
     useEffect(() => {
-        if (loading) {
-            loadCalls()
+        const loadCalls = async () => {
+            await getImages();
+            await preloadThumbs();
+            NProgress.done();
+            setLoading(false);
         }
-    }, [loading]);
 
-    const loadCalls = async () => {
-        await getImages();
-        await preloadThumbs();
-        NProgress.done();
-        setLoading(false);
-    }
+        const preloadThumbs = async () => {
+            const thumbPromises = imagePaths.map((imagePath: string) => {
+                return new Promise((resolve, reject) => {
+                    const img = new Image();
+                    img.src = `https://imgix.femmund.com/${imagePath}?w=50&blur=50&q=85`;
+                    // @ts-ignore
+                    img.onload = resolve();
+                    // @ts-ignore
+                    img.onerror = reject();
+                });
+            });
+            await Promise.all(thumbPromises);
+        }
+
+        if (loading) {
+            loadCalls();
+        }
+    }, [loading, imagePaths]);
 
     const getImages = async () => {
         await axios.get('/api/list-gallery-images')
@@ -44,20 +58,6 @@ const Gallery = (): JSX.Element => {
             });
     }
 
-    const preloadThumbs = async () => {
-        const thumbPromises = imagePaths.map((imagePath: string) => {
-            return new Promise((resolve, reject) => {
-                const img = new Image();
-                img.src = `https://imgix.femmund.com/${imagePath}?w=50&blur=50&q=87`;
-                // @ts-ignore
-                img.onload = resolve();
-                // @ts-ignore
-                img.onerror = reject();
-            });
-        });
-        await Promise.all(thumbPromises);
-    }
-
     const GetImageListItems = () => {
         if (!imagePaths) {
             return <></>;
@@ -69,7 +69,7 @@ const Gallery = (): JSX.Element => {
                     loading={'lazy'}
                     alt={''}
                     placeholder={
-                        <AntdImage style={{width: '100%', height: '100%'}} src={`https://imgix.femmund.com/${imagePath}?w=50&blur=50&q=87`} />
+                        <AntdImage style={{width: '100%', height: '100%'}} src={`https://imgix.femmund.com/${imagePath}?w=50&blur=50&q=85`} />
                     }
                 />
             </ImageListItem>

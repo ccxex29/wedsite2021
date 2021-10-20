@@ -1,4 +1,5 @@
 import {
+    Timeline,
     TimelineConnector,
     TimelineContent,
     TimelineDot,
@@ -6,13 +7,9 @@ import {
     TimelineOppositeContent,
     TimelineSeparator,
 } from '@mui/lab';
-import {Skeleton, Typography} from 'antd';
 // @ts-ignore
 import Plx from 'react-plx';
-import {Timeline} from '@mui/lab';
 import styles from '../styles/TimelineView.module.sass';
-
-const {Title, Text} = Typography;
 
 const TimelineView = (props: {dimensions: {height: number, width: number}}) => {
     const {dimensions} = props;
@@ -63,12 +60,12 @@ const TimelineView = (props: {dimensions: {height: number, width: number}}) => {
                         ]}
                         className={styles.timelineItemDefaults}
                     >
-                        <Title level={5}>
+                        <h2>
                             {data.title || ''}
-                        </Title>
-                        <Text>
+                        </h2>
+                        <p>
                             {data.body || ''}
-                        </Text>
+                        </p>
                     </Plx>
                 );
             }

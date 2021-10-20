@@ -1,5 +1,5 @@
 import '../styles/globals.scss';
-import 'antd/dist/antd.css';
+import 'antd/dist/antd.min.css';
 import Head from 'next/head';
 import HeaderNavigator from '../components/HeaderNavigator';
 import Footer from '../components/Footer';

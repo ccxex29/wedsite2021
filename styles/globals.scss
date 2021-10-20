@@ -1,15 +1,15 @@
 @use "../constants/colours";
-@import url('https://rsms.me/inter/inter.css');
+//@import url('https://rsms.me/inter/inter.css');
 
-html {
-    font-family: 'Inter', sans-serif;
-}
+//html {
+    //font-family: 'Inter', sans-serif;
+//}
 
-@supports (font-variation-settings: normal) {
-    html {
-        font-family: 'Inter var', sans-serif;
-    }
-}
+//@supports (font-variation-settings: normal) {
+    //html {
+        //font-family: 'Inter var', sans-serif;
+    //}
+//}
 
 html,
 body {
@@ -33,11 +33,29 @@ a {
 }
 
 [class*="Header_menuItemBG"].ant-menu-item-selected {
-    border-bottom: 2px solid white !important;
+    border-bottom: 2px solid #FFF !important;
 }
 
 [class*="Header_menuItemNoBG"].ant-menu-item-selected {
     border-bottom: 2px solid var(--wedsite-tertiary) !important;
+}
+
+.ant-menu .ant-menu-overflowed-submenu {
+    color: #FFF !important;
+}
+
+.ant-menu {
+    .ant-menu-submenu-active {
+        color: #FFF !important;
+        border-bottom: 2px solid #FFF !important;
+    }
+    .ant-menu-submenu-title:hover {
+        color: #FFF !important;
+    }
+}
+
+.ant-menu-submenu-popup .ant-menu-item a {
+    color: var(--wedsite-tertiary) !important;
 }
 
 #nprogress .bar {

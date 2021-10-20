@@ -1,18 +1,17 @@
 import {useEffect, useState} from 'react';
-import {Typography, Row, Col} from 'antd';
+import {Row, Col} from 'antd';
 import Image from 'next/image';
 import styles from '../styles/HomePage.module.sass';
 import TimelineView from '../components/TimelineView';
 import InvitationSection from '../components/InvitationSection';
 import colours from '../constants/colours';
+import NProgress from 'nprogress';
 // @ts-ignore
 import Plx from 'react-plx';
-import NProgress from 'nprogress';
-
-const {Title} = Typography;
 
 
 const Home = (): JSX.Element => {
+    NProgress.done();
     const [dimensions, setDimensions] = useState({
         width: 0,
         height: 0,
@@ -26,11 +25,6 @@ const Home = (): JSX.Element => {
             });
         };
         trackDimensions();
-        NProgress.done();
-        // window.addEventListener('resize', trackDimensions);
-        // return () => {
-        //     window.removeEventListener('resize', trackDimensions);
-        // }
     }, []);
 
     const parallaxImgCoverData = [
@@ -72,7 +66,7 @@ const Home = (): JSX.Element => {
                 >
                     <Image
                         className={styles.imageCover}
-                        src={'wedsite2021/HAN_8747.jpg'}
+                        src={'wedsite2021/HAN_8747.jpg?q=85&fit=max&auto=format&auto=compress'}
                         // blurDataURL={'https://imgix.femmund.com/wedsite2021/HAN_8747.jpg?w=100'}
                         layout={'fill'}
                         objectFit={'cover'}
@@ -91,26 +85,26 @@ const Home = (): JSX.Element => {
                         textAlign: 'center',
                     }}>
                         <Col>
-                            <Title style={{
+                            <h1 style={{
                                 color: '#fff',
                                 fontSize: 80,
-                            }}>Title & Title</Title>
+                            }}>{'Title & Title'}</h1>
                         </Col>
                         <Col>
-                            <Title level={4} style={{
+                            <h3 style={{
                                 color: '#fff'
                             }}>
                                 Some other words maybe?
-                            </Title>
+                            </h3>
                         </Col>
                     </Row>
             </section>
             <section id={'section-our-story'} style={{
                 position: 'relative',
-                padding: 100,
+                paddingBlock: 100,
                 backgroundColor: colours.white,
             }}>
-                <Title level={1} style={{textAlign: 'center', marginBottom: 75}}>Our Story</Title>
+                <h1 style={{textAlign: 'center', marginBottom: 75, fontWeight: 'bold', fontSize: '2rem',}}>Our Story</h1>
                 <TimelineView dimensions={dimensions} />
             </section>
             <section className={styles.welcomeInvitation}>
@@ -124,15 +118,5 @@ const Home = (): JSX.Element => {
         </main>
     )
 };
-
-// export const getStaticProps: GetStaticProps = async () => {
-//     let imageCover: any = await axios.get('https://imgix.femmund.com/wedsite2021/HAN_8747.jpg', {responseType: 'arraybuffer'});
-//     imageCover = Buffer.from(imageCover.data).toString('base64');
-//     return {
-//         props: {
-//             imageCover,
-//         }
-//     }
-// }
 
 export default Home;

@@ -9,6 +9,8 @@ async function runMiddleware(req: NextApiRequest, res: NextApiResponse) {
     });
 }
 
-export default function (req: NextApiRequest, res: NextApiResponse) {
+const middleware = function (req: NextApiRequest, res: NextApiResponse) {
     return runMiddleware(req, res);
 };
+
+export default middleware;

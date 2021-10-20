@@ -1,9 +1,8 @@
-import {PageHeader, Menu, Affix} from 'antd';
+import {PageHeader, Menu} from 'antd';
 import {useState, useEffect} from 'react';
 import Link from 'next/link';
 import {useRouter} from 'next/router';
 import styles from '../styles/Header.module.sass';
-import {JSX} from '@babel/types';
 import colours from '../constants/colours';
 import {hexToRgb} from '@mui/system';
 
@@ -97,6 +96,7 @@ const HeaderNavigator = (): JSX.Element => {
                     <Menu mode={'horizontal'}
                           selectedKeys={[router.pathname]}
                           key={'nav-menu'}
+                          forceSubMenuRender={true}
                           className={styles.menu}
                           style={{
                               // backgroundColor: `rgba(0, 0, 0, ${
