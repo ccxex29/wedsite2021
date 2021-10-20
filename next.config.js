@@ -1,5 +1,7 @@
+const nextBuildId = require('next-build-id');
 module.exports = {
 	// target: "serverless",
+	generateBuildId: () => nextBuildId({dir: __dirname}),
 	reactStrictMode: true,
 	images: {
 		loader: 'imgix',
