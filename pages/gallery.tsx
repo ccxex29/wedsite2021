@@ -1,52 +1,75 @@
 import AntdImage from 'antd/lib/image';
-import {Alert, ImageList, ImageListItem, Skeleton} from '@mui/material';
+import {Alert, ImageList, ImageListItem} from '@mui/material';
 import styles from '../styles/Gallery.module.sass';
 import axios from 'axios';
-import {useEffect, useState} from 'react';
-import Masonry from '@mui/lab/Masonry';
-import MasonryItem from '@mui/lab/MasonryItem';
+import {useEffect, useRef, useState} from 'react';
 import NProgress from 'nprogress';
 
 const Gallery = (): JSX.Element => {
     const [loading, setLoading] = useState(true);
+    const [loadingPercentage, setLoadingPercentage] = useState<string>('0');
+    const [doneCount, setDoneCount] = useState(0);
     const [errorMessage, setErrorMessage] = useState({
         isError: false,
         message: '',
     });
     const [imagePaths, setImagePaths] = useState<Array<string>>([]);
+    const imagePathCount = useRef(1);
+
+    useEffect(() => {
+        setLoadingPercentage((doneCount/imagePathCount.current * 100).toFixed(2));
+    }, [doneCount]);
+
+    useEffect(() => {
+        const loadCalls = async () => {
+            if (imagePaths.length) {
+                await imageLoader();
+                NProgress.done();
+                setLoading(false);
+            }
+        }
+        let promises: Promise<any>[];
+
+        const imageLoader = async () => {
+            const processNums = 4;
+            promises = imagePaths.map((imagePath: string) => {
+                return new Promise((resolve, reject) => {
+                    const img = new Image();
+                    img.src = `https://imgix.femmund.com/${imagePath}`;
+                    img.addEventListener('load', () => {
+                        setDoneCount(prevState => ++prevState);
+                        resolve(img);
+                    });
+                    img.addEventListener('error', () => {
+                        setDoneCount(prevState => ++prevState);
+                        reject(img);
+                    });
+                });
+            });
+            while (promises.length) {
+                await Promise.all(promises.splice(0, processNums-1));
+            }
+        }
+
+        loadCalls();
+    }, [imagePaths]);
 
     useEffect(() => {
         const loadCalls = async () => {
             await getImages();
-            await preloadThumbs();
-            NProgress.done();
-            setLoading(false);
-        }
-
-        const preloadThumbs = async () => {
-            const thumbPromises = imagePaths.map((imagePath: string) => {
-                return new Promise((resolve, reject) => {
-                    const img = new Image();
-                    img.src = `https://imgix.femmund.com/${imagePath}?w=50&blur=50&q=85`;
-                    // @ts-ignore
-                    img.onload = resolve();
-                    // @ts-ignore
-                    img.onerror = reject();
-                });
-            });
-            await Promise.all(thumbPromises);
         }
 
         if (loading) {
             loadCalls();
         }
-    }, [loading, imagePaths]);
+    }, [loading]);
 
     const getImages = async () => {
-        await axios.get('/api/list-gallery-images')
+        return axios.get('/api/list-gallery-images')
             .then(res => {
                 if (res.data.data) {
                     setImagePaths(res.data.data);
+                    imagePathCount.current = res.data.data.length || -1;
                 }
             })
             .catch(err => {
@@ -66,11 +89,7 @@ const Gallery = (): JSX.Element => {
             <ImageListItem key={imagePath} className={styles.galleryThumb}>
                 <AntdImage
                     src={`https://imgix.femmund.com/${imagePath}`}
-                    loading={'lazy'}
                     alt={''}
-                    placeholder={
-                        <AntdImage style={{width: '100%', height: '100%'}} src={`https://imgix.femmund.com/${imagePath}?w=50&blur=50&q=85`} />
-                    }
                 />
             </ImageListItem>
         ));
@@ -80,7 +99,7 @@ const Gallery = (): JSX.Element => {
         <main className={styles.cover}>
             {
                 errorMessage.isError ?
-                    <Alert severity={'error'}>
+                    <Alert severity={'error'} style={{marginBottom: 20}}>
                         { errorMessage.message }
                     </Alert> :
                     null
@@ -88,32 +107,12 @@ const Gallery = (): JSX.Element => {
             {
                 loading ?
                     (
-                        <Masonry columns={4} spacing={8}>
-                            <MasonryItem>
-                                <Skeleton variant={'rectangular'} width={400} height={400} />
-                            </MasonryItem>
-                            <MasonryItem>
-                                <Skeleton variant={'rectangular'} width={400} height={400} />
-                            </MasonryItem>
-                            <MasonryItem>
-                                <Skeleton variant={'rectangular'} width={400} height={400} />
-                            </MasonryItem>
-                            <MasonryItem>
-                                <Skeleton variant={'rectangular'} width={400} height={400} />
-                            </MasonryItem>
-                            <MasonryItem>
-                                <Skeleton variant={'rectangular'} width={400} height={400} />
-                            </MasonryItem>
-                            <MasonryItem>
-                                <Skeleton variant={'rectangular'} width={400} height={400} />
-                            </MasonryItem>
-                            <MasonryItem>
-                                <Skeleton variant={'rectangular'} width={400} height={400} />
-                            </MasonryItem>
-                            <MasonryItem>
-                                <Skeleton variant={'rectangular'} width={400} height={400} />
-                            </MasonryItem>
-                        </Masonry>
+                        <div className={styles.loadingPercentage}>
+                            <div>Please Wait While We&apos;re Loading</div>
+                            <div>
+                                {loadingPercentage} %
+                            </div>
+                        </div>
                     ) : (
                         <ImageList variant={'masonry'} cols={4} gap={8} className={styles.galleryThumbs}>
                             { GetImageListItems() }

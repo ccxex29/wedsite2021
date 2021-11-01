@@ -5,12 +5,12 @@ const Footer = (): JSX.Element => {
     return (
         <footer className={styles.footer}>
             <p>
-                Created with&nbsp;
+                Made with&nbsp;
                 <HeartFilled style={{color: 'red'}} />
-                &nbsp;by Louis Raymond
+                &nbsp;by the joint effort of the celebrants
             </p>
             <p>
-                Powered by Next.js, Cloudflare, Backblaze, Imgix and Netlify
+                Powered by various techs including Next.js, Cloudflare, Backblaze, Imgix and Netlify
             </p>
         </footer>
     );

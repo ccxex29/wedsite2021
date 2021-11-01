@@ -7,8 +7,8 @@ const InvitationSection = () => {
         <div className={styles.invitationWrapper}>
             <h4>Our Online Wedding Ceremony On</h4>
             <h2>
-                Friday, 11 November 2021<br/>
-                11 PM (GMT+7)
+                Friday, 12 November 2021<br/>
+                10 AM (GMT+7)
             </h2>
             <div style={{marginTop: '3rem'}}>
                 <Link href={'/livestreaming'}>
