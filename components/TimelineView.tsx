@@ -104,8 +104,10 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
                 }
                 return (
                     <AnimateStoryContent index={index} mode={'content'}>
-                        <h3 className={`${styles.timelineHead} ${styles.timelineHeaderStyle}`} style={{justifyContent: getFlexTimelineJustifyStyle(index & 1 ? 'opposite' : 'normal')}}> {data.title || ''} </h3>
-                        <p> {data.body || ''} </p>
+                        <div className={styles.timelineHead} style={{justifyContent: getFlexTimelineJustifyStyle(index & 1 ? 'opposite' : 'normal')}}>
+                            <h3 className={styles.timelineHeaderStyle}> {data.title || ''} </h3>
+                        </div>
+                        <p className={styles.timelineContentStyle}> {data.body || ''} </p>
                     </AnimateStoryContent>
                 );
             }
@@ -132,7 +134,7 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
                             properties: [
                                 {
                                     startValue: 5,
-                                    endValue: 200,
+                                    endValue: 300,
                                     property: 'height',
                                 },
                             ],
