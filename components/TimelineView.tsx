@@ -15,9 +15,9 @@ import styles from '../styles/TimelineView.module.sass';
 const TimelineView = (props: { dimensions: { height: number, width: number } }) => {
     const {dimensions} = props;
     const timings = {
-        start: dimensions.height * .6,
+        start: dimensions.height * .8,
         dotTimeout: 50,
-        connectorTimeout: 100,
+        connectorTimeout: 150,
         textTimeout: 50,
     }
     const decorationWait = timings.dotTimeout + timings.connectorTimeout;
