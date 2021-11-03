@@ -21,19 +21,12 @@ const Gallery = (): JSX.Element => {
     }, [doneCount]);
 
     useEffect(() => {
-        const loadCalls = async () => {
-            if (imagePaths.length) {
-                await imageLoader();
-                NProgress.done();
-                setLoading(false);
-            }
-        }
-        let promises: Promise<any>[];
-
         const imageLoader = async () => {
             const processNums = 4;
-            promises = imagePaths.map((imagePath: string) => {
+            const clonedImagePaths = [...imagePaths];
+            const imageLoad = (imagePath: string) => {
                 return new Promise((resolve, reject) => {
+                    console.log('called')
                     const img = new Image();
                     img.src = `https://imgix.femmund.com/${imagePath}`;
                     img.addEventListener('load', () => {
@@ -45,9 +38,25 @@ const Gallery = (): JSX.Element => {
                         reject(img);
                     });
                 });
-            });
-            while (promises.length) {
-                await Promise.all(promises.splice(0, processNums-1));
+            };
+            while (clonedImagePaths.length) {
+                const promises: Promise<any>[] = [];
+                const path = clonedImagePaths.splice(0, processNums);
+                if (!path) {
+                    return;
+                }
+                for (let i = 0; i < path.length; i++) {
+                    promises.push(imageLoad(path[i]));
+                }
+                await Promise.all(promises);
+            }
+        }
+
+        const loadCalls = async () => {
+            if (imagePaths.length) {
+                await imageLoader();
+                NProgress.done();
+                setLoading(false);
             }
         }
 
@@ -55,6 +64,23 @@ const Gallery = (): JSX.Element => {
     }, [imagePaths]);
 
     useEffect(() => {
+        const getImages = async () => {
+            return axios.get('/api/list-gallery-images')
+                .then(res => {
+                    if (res.data.data) {
+                        setImagePaths(res.data.data);
+                        imagePathCount.current = res.data.data.length || -1;
+                    }
+                })
+                .catch(err => {
+                    let errMsg = err.response.data.message || 'Unknown error occurred';
+                    setErrorMessage({
+                        isError: true,
+                        message: errMsg,
+                    });
+                });
+        }
+
         const loadCalls = async () => {
             await getImages();
         }
@@ -63,23 +89,6 @@ const Gallery = (): JSX.Element => {
             loadCalls();
         }
     }, [loading]);
-
-    const getImages = async () => {
-        return axios.get('/api/list-gallery-images')
-            .then(res => {
-                if (res.data.data) {
-                    setImagePaths(res.data.data);
-                    imagePathCount.current = res.data.data.length || -1;
-                }
-            })
-            .catch(err => {
-                let errMsg = err.response.data.message || 'Unknown error occurred';
-                setErrorMessage({
-                    isError: true,
-                    message: errMsg,
-                });
-            });
-    }
 
     const GetImageListItems = () => {
         if (!imagePaths) {

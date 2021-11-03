@@ -5,6 +5,7 @@ const BottomFAB = (): JSX.Element => {
         <BackTop style={{
             right: 50,
             bottom: 50,
+            position: 'fixed',
         }} />
     )
 }

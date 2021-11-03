@@ -134,7 +134,7 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
                             properties: [
                                 {
                                     startValue: 5,
-                                    endValue: 300,
+                                    endValue: 250,
                                     property: 'height',
                                 },
                             ],
