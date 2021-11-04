@@ -14,11 +14,15 @@ import styles from '../styles/TimelineView.module.sass';
 
 const TimelineView = (props: { dimensions: { height: number, width: number } }) => {
     const {dimensions} = props;
+    const heights = {
+        startingHeight: 5,
+        totalHeight: 300,
+    }
     const timings = {
-        start: dimensions.height * .8,
-        dotTimeout: 50,
-        connectorTimeout: 150,
-        textTimeout: 50,
+        start: dimensions.height * 1.0,
+        dotTimeout: 75,
+        connectorTimeout: 200,
+        textTimeout: 75,
     }
     const decorationWait = timings.dotTimeout + timings.connectorTimeout;
 
@@ -133,8 +137,8 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
                             duration: timings.connectorTimeout,
                             properties: [
                                 {
-                                    startValue: 5,
-                                    endValue: 250,
+                                    startValue: heights.startingHeight,
+                                    endValue: heights.totalHeight,
                                     property: 'height',
                                 },
                             ],
@@ -161,7 +165,7 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
     }
 
     return (
-        <div style={{minHeight: 600}}>
+        <div style={{minHeight: heights.totalHeight * timelineContents.length}}>
             <Timeline>
                 {TimelineItemComponent()}
             </Timeline>

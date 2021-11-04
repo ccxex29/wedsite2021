@@ -93,20 +93,21 @@ const Home = (): JSX.Element => {
                             }}>{'Title & Title'}</h1>
                         </Col>
                         <Col>
-                            <h3 style={{
-                                color: '#fff'
+                            <p style={{
+                                color: '#fff',
+                                fontSize: '1.2em',
                             }}>
                                 Some other words maybe?
-                            </h3>
+                            </p>
                         </Col>
                     </Row>
             </section>
-            <section id={'section-our-story'} style={{
+            <section aria-label={'Our Story Section'} id={'section-our-story'} style={{
                 position: 'relative',
                 paddingBlock: 100,
                 backgroundColor: colours.white,
             }}>
-                <h1 style={{textAlign: 'center', marginBottom: 75, fontWeight: 'bold', fontSize: '2rem',}}>Our Story</h1>
+                <h2 style={{textAlign: 'center', marginBottom: 75, fontWeight: 'bold', fontSize: '2rem',}}>Our Story</h2>
                 <p style={{
                     fontSize: '1.2rem',
                     paddingInline: '6rem',
@@ -116,12 +117,12 @@ const Home = (): JSX.Element => {
                 </p>
                 <TimelineView dimensions={dimensions} />
             </section>
-            <section className={styles.welcomeInvitation}>
-                <div>
-                    <span>Wherever you are, we delightfully invite you to witness our vows and share the joy with us virtually</span>
-                </div>
+            <section aria-label={'Welcome Invitation Section'} id={'section-welcome-invitation'} className={styles.welcomeInvitation}>
+                <h2 aria-label={'Welcome Invitation'}>
+                    Wherever you are, we delightfully invite you to witness our vows and share the joy with us virtually
+                </h2>
             </section>
-            <section>
+            <section aria-label={'Schedule Invitation Section'}>
                 <InvitationSection />
             </section>
         </main>

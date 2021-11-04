@@ -4,7 +4,7 @@ import {HeartFilled} from '@ant-design/icons';
 const Footer = (): JSX.Element => {
     return (
         <footer className={styles.footer}>
-            <p>
+            <p style={{textAlign: 'center'}}>
                 Made with&nbsp;
                 <HeartFilled style={{color: 'red'}} />
                 &nbsp;by the joint effort of the celebrants

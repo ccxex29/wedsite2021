@@ -3,6 +3,10 @@ module.exports = {
 	// target: "serverless",
 	generateBuildId: () => nextBuildId({dir: __dirname}),
 	reactStrictMode: true,
+	i18n: {
+		locales: ['en'],
+		defaultLocale: 'en',
+	},
 	images: {
 		loader: 'imgix',
 		path: 'https://imgix.femmund.com',

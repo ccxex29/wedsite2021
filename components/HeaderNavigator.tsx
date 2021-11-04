@@ -5,6 +5,7 @@ import {useRouter} from 'next/router';
 import styles from '../styles/Header.module.sass';
 import colours from '../constants/colours';
 import {hexToRgb} from '@mui/system';
+import Logo from './Logo';
 
 /**
  * @type number
@@ -58,10 +59,15 @@ const HeaderNavigator = (): JSX.Element => {
                    style={{
                        color: !isLivestreaming() ? `hsl(0, 0%, 100%)` : '#000',
                        transition: 'color 0.5s ease-in',
-                   }}>
-                    Fec
-                    <span className={styles.undText} style={isLivestreaming() ? {color: colours.accent} : {}}>{andText}</span>
-                    Grace
+                   }}
+                   aria-label={'Home'}
+                >
+                    <Logo svgProps={{
+                        fill: '#FFF'
+                    }} height={48} width={48} />
+                    {/*Fec*/}
+                    {/*<span className={styles.undText} style={isLivestreaming() ? {color: colours.accent} : {}}>{andText}</span>*/}
+                    {/*Grace*/}
                 </a>
             </Link>
         )
@@ -82,6 +88,7 @@ const HeaderNavigator = (): JSX.Element => {
         return (
             <PageHeader
                 title={<HeaderTitle/>}
+                className={styles.pageHeaderStyle}
                 style={{
                     backgroundColor:
                         isLivestreaming() ?
@@ -89,11 +96,11 @@ const HeaderNavigator = (): JSX.Element => {
                             isHome() ?
                             `rgba(${colourRgbMap}, ${headerTranslucentColor()})` :
                             `rgba(${colourRgbMap}, 90%)`,
-                    position: 'relative',
-                    height: '100%',
                 }}
                 extra={[
                     <Menu mode={'horizontal'}
+                          role={'navigation'}
+                          aria-label={'Navigation Menu'}
                           selectedKeys={[router.pathname]}
                           key={'nav-menu'}
                           forceSubMenuRender={true}
@@ -134,14 +141,14 @@ const HeaderNavigator = (): JSX.Element => {
     }
 
     return (
-        <div style={{
+        <header style={{
             position: 'fixed',
             width: '100%',
             zIndex: 99,
             top: 0,
         }}>
             <DynamicHeader/>
-        </div>
+        </header>
     );
 };
 

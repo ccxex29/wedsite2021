@@ -4,12 +4,12 @@ import Link from 'next/link';
 
 const InvitationSection = () => {
     return (
-        <div className={styles.invitationWrapper}>
-            <h4>Our Online Wedding Ceremony On</h4>
-            <h2>
+        <div className={styles.invitationWrapper} aria-label={'Schedule Invitation'}>
+            <h2 style={{fontSize: '1em'}}>Our Online Wedding Ceremony On</h2>
+            <p style={{fontSize: '1.5em'}}>
                 Friday, 12 November 2021<br/>
                 10 AM (GMT+7)
-            </h2>
+            </p>
             <div style={{marginTop: '3rem'}}>
                 <Link href={'/livestreaming'}>
                     <a>

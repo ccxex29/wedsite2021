@@ -3,10 +3,10 @@ import colours from '../constants/colours';
 
 declare module '@mui/material/styles' {
     interface Palette {
-        tertiary: Palette['primary'],
+        tertiary: Palette['secondary'],
     }
     interface PaletteOptions {
-        tertiary?: PaletteOptions['primary'],
+        tertiary?: PaletteOptions['secondary'],
     }
 }
 

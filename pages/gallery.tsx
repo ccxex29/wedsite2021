@@ -26,7 +26,6 @@ const Gallery = (): JSX.Element => {
             const clonedImagePaths = [...imagePaths];
             const imageLoad = (imagePath: string) => {
                 return new Promise((resolve, reject) => {
-                    console.log('called')
                     const img = new Image();
                     img.src = `https://imgix.femmund.com/${imagePath}`;
                     img.addEventListener('load', () => {
