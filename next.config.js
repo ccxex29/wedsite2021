@@ -37,6 +37,17 @@ module.exports = {
 			},
 		],
 	],
+	"presets": [
+		[
+			"next/babel",
+			{
+				"preset-env": {
+					useBuiltIns: false,
+					"targets": "Chrome >= 60, Safari >= 10.1, iOS >= 10.3, Firefox >= 54, Edge >= 15",
+				}
+			}
+		]
+	],
 	webpack: (config, {dev, isServer}) => {
 		if (!dev && !isServer) {
 			Object.assign(config.resolve.alias, {
@@ -46,6 +57,10 @@ module.exports = {
 				'react/jsx-runtime': 'preact/jsx-runtime',
 			});
 		}
+		config.module.rules.push({
+			test: /\.svg$/,
+			use: ["@svgr/webpack"],
+		});
 
 		return config;
 	},

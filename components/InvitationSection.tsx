@@ -10,7 +10,7 @@ const InvitationSection = () => {
                 Friday, 12 November 2021<br/>
                 10 AM (GMT+7)
             </p>
-            <div style={{marginTop: '3rem'}}>
+            <div style={{marginTop: '1.5rem'}}>
                 <Link href={'/livestreaming'}>
                     <a>
                     <Button color={'tertiary'} variant={'contained'}>JOIN US</Button>
