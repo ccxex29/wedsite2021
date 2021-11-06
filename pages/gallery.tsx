@@ -15,6 +15,7 @@ const Gallery = (): JSX.Element => {
     });
     const [imagePaths, setImagePaths] = useState<Array<string>>([]);
     const imagePathCount = useRef(1);
+    const [loadedImages, setLoadedImages] = useState<string[]>([]);
 
     useEffect(() => {
         setLoadingPercentage((doneCount/imagePathCount.current * 100).toFixed(2));
@@ -24,28 +25,52 @@ const Gallery = (): JSX.Element => {
         const imageLoader = async () => {
             const processNums = 4;
             const clonedImagePaths = [...imagePaths];
-            const imageLoad = (imagePath: string) => {
+            const clonedImageKeys = [...imagePaths.keys()];
+            const imageLoad = (imagePath: string, imageKey: number) => {
                 return new Promise((resolve, reject) => {
-                    const img = new Image();
-                    img.src = `https://imgix.femmund.com/${imagePath}`;
-                    img.addEventListener('load', () => {
-                        setDoneCount(prevState => ++prevState);
-                        resolve(img);
-                    });
-                    img.addEventListener('error', () => {
-                        setDoneCount(prevState => ++prevState);
-                        reject(img);
-                    });
+                    fetch(`https://imgix.femmund.com/${imagePath}`)
+                        .then(res => res.blob())
+                        .then(blob => new Promise(resolve => {
+                            const fReader = new FileReader();
+                            fReader.onload = function () {
+                                resolve(this.result);
+                            };
+                            fReader.readAsDataURL(blob);
+                        }))
+                        .then(base64Img => {
+                            if (typeof base64Img === 'string') {
+                                setLoadedImages(prev => {
+                                    prev[imageKey] = base64Img;
+                                    return prev;
+                                });
+                            }
+                            setDoneCount(prevState => ++prevState);
+                            resolve(base64Img);
+                        })
+                        .catch(() => {
+                            console.error('Error fetching image data');
+                        });
+                    // const img = new Image();
+                    // img.src = `https://imgix.femmund.com/${imagePath}`;
+                    // img.addEventListener('load', () => {
+                    //     setDoneCount(prevState => ++prevState);
+                    //     resolve(img);
+                    // });
+                    // img.addEventListener('error', () => {
+                    //     setDoneCount(prevState => ++prevState);
+                    //     reject(img);
+                    // });
                 });
             };
             while (clonedImagePaths.length) {
                 const promises: Promise<any>[] = [];
                 const path = clonedImagePaths.splice(0, processNums);
+                const keys = clonedImageKeys.splice(0, processNums);
                 if (!path) {
                     return;
                 }
                 for (let i = 0; i < path.length; i++) {
-                    promises.push(imageLoad(path[i]));
+                    promises.push(imageLoad(path[i], keys[i]));
                 }
                 await Promise.all(promises);
             }
@@ -93,10 +118,10 @@ const Gallery = (): JSX.Element => {
         if (!imagePaths) {
             return <></>;
         }
-        return imagePaths.map(imagePath => (
+        return imagePaths.map((imagePath, imageIter) => (
             <ImageListItem key={imagePath} className={styles.galleryThumb}>
                 <AntdImage
-                    src={`https://imgix.femmund.com/${imagePath}`}
+                    src={loadedImages[imageIter] || imagePath}
                     alt={''}
                 />
             </ImageListItem>
@@ -116,7 +141,7 @@ const Gallery = (): JSX.Element => {
                 loading ?
                     (
                         <div className={styles.loadingPercentage}>
-                            <div>Please Wait While We&apos;re Loading</div>
+                            <div>Please Wait While We&apos;re Loading Gallery Images</div>
                             <div>
                                 {loadingPercentage} %
                             </div>
