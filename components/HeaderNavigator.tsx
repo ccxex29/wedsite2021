@@ -5,7 +5,7 @@ import {useRouter} from 'next/router';
 import styles from '../styles/Header.module.sass';
 import colours from '../constants/colours';
 import {hexToRgb} from '@mui/system';
-import Logo from './Logo';
+import Logo from './svgr/Logo';
 
 /**
  * @type number
@@ -58,13 +58,12 @@ const HeaderNavigator = (): JSX.Element => {
                 <a className={styles.titleLogo}
                    style={{
                        color: !isLivestreaming() ? `hsl(0, 0%, 100%)` : '#000',
-                       transition: 'color 0.5s ease-in',
                    }}
                    aria-label={'Home'}
                 >
                     <Logo svgProps={{
-                        fill: '#FFF'
-                    }} height={48} width={48} />
+                        fill: isLivestreaming() ? colours.tertiary : '#FFF',
+                    }} height={72} width={72} />
                     {/*Fec*/}
                     {/*<span className={styles.undText} style={isLivestreaming() ? {color: colours.accent} : {}}>{andText}</span>*/}
                     {/*Grace*/}
