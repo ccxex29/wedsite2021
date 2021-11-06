@@ -24,7 +24,6 @@ import weddingDayIcon from '../public/images/wedding_day.svg';
 
 const TimelineView = (props: { dimensions: { height: number, width: number } }) => {
     const {dimensions} = props;
-    console.log(dimensions)
     const heights = {
         startingHeight: 140,
         totalHeight: 400,
@@ -148,7 +147,6 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
                     justifyContent: getFlexTimelineJustifyStyle(position),
                     height: heights.iconHeight,
                     color: colours.tertiary,
-                    fontSize: '1.20em',
                 } : mode === 'icon' ? style ?? {} : undefined}
             >
                 {isValidElement(props.children) ? props.children : <div style={style}>{props.children}</div>}
@@ -161,8 +159,8 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
 
         timelineContents.forEach((data, index) => {
             const content = (mode: string) => {
-                const headerFontSize = dimensions.width < 620 ? '1em' : dimensions.width < 800 ? '1.2em' : '1.5em';
-                const bodyFontSize = dimensions.width < 620 ? '0.8em' : '1em';
+                const headerFontSize = dimensions.width < 620 ? '1rem' : dimensions.width < 800 ? '1.2rem' : '1.5rem';
+                const bodyFontSize = dimensions.width < 620 ? '0.8rem' : dimensions.width < 800 ? '1rem' : '1.2rem';
 
                 if (mode === 'opposite' && !(index & 1)) {
                     return (
