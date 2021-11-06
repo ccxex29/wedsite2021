@@ -24,15 +24,16 @@ import weddingDayIcon from '../public/images/wedding_day.svg';
 
 const TimelineView = (props: { dimensions: { height: number, width: number } }) => {
     const {dimensions} = props;
+    console.log(dimensions)
     const heights = {
         startingHeight: 140,
         totalHeight: 400,
-        iconHeight: 128,
+        iconHeight: dimensions.width < 480 ? 64 : 128,
     }
     const timings = {
         start: dimensions.height - 400,
         dotTimeout: 125,
-        connectorTimeout: 250,
+        connectorTimeout: 300,
         textTimeout: 125,
     }
     const decorationWait = timings.dotTimeout + timings.connectorTimeout;
@@ -142,6 +143,7 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
                 ]}
                 className={`${animateProperties ? '' : styles.timelineItemDefaults} ${mode === 'date' ? styles.timelineHead : ''}`}
                 style={mode === 'date' ? {
+                    ...style,
                     // @ts-ignore
                     justifyContent: getFlexTimelineJustifyStyle(position),
                     height: heights.iconHeight,
@@ -149,7 +151,7 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
                     fontSize: '1.20em',
                 } : mode === 'icon' ? style ?? {} : undefined}
             >
-                {isValidElement(props.children) ? props.children : <div>{props.children}</div>}
+                {isValidElement(props.children) ? props.children : <div style={style}>{props.children}</div>}
             </Plx>
         )
     }
@@ -159,6 +161,9 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
 
         timelineContents.forEach((data, index) => {
             const content = (mode: string) => {
+                const headerFontSize = dimensions.width < 620 ? '1em' : dimensions.width < 800 ? '1.2em' : '1.5em';
+                const bodyFontSize = dimensions.width < 620 ? '0.8em' : '1em';
+
                 if (mode === 'opposite' && !(index & 1)) {
                     return (
                         <AnimateStoryContent
@@ -166,6 +171,7 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
                             mode={'date'}
                             position={mode}
                             shouldWaitForDecoration={false}
+                            style={{fontSize: headerFontSize}}
                         >
                             {data.date}
                         </AnimateStoryContent>
@@ -177,19 +183,21 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
                             mode={'date'}
                             position={mode}
                             shouldWaitForDecoration={false}
+                            style={{fontSize: headerFontSize}}
                         >
                             {data.date}
                         </AnimateStoryContent>
                     );
                 }
+
                 return (
-                    <AnimateStoryContent index={index} mode={'content'} shouldWaitForDecoration={false}>
+                    <AnimateStoryContent index={index} mode={'content'} shouldWaitForDecoration={false} style={{display: 'flex', flexDirection: 'column'}}>
                         <div className={styles.timelineHead}
                              style={{justifyContent: getFlexTimelineJustifyStyle(index & 1 ? 'opposite' : 'normal')}}>
-                            <h3 style={{height: heights.iconHeight}}
+                            <h3 style={{minHeight: heights.iconHeight, fontSize: headerFontSize}}
                                 className={styles.timelineHeaderStyle}> {data.title || ''} </h3>
                         </div>
-                        <p className={styles.timelineBodyStyle}> {data.body || ''} </p>
+                        <p className={styles.timelineBodyStyle} style={{fontSize: bodyFontSize}}> {data.body || ''} </p>
                     </AnimateStoryContent>
                 );
             }
