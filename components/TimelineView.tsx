@@ -22,18 +22,34 @@ import sangjitIcon from '../public/images/sangjit.svg';
 import proposeIcon from '../public/images/propose.svg';
 import weddingDayIcon from '../public/images/wedding_day.svg';
 
+type AnimateStoryContentPropsType = {
+    children?: JSX.Element[] | JSX.Element | string,
+    index: number,
+    mode: string,
+    position?: string,
+    animateProperties?: {
+        startValue?: number,
+        endValue?: number,
+        property?: string
+    }[],
+    shouldWaitForText?: boolean,
+    shouldWaitForDecoration?: boolean,
+    customWaitDuration?: number,
+    style?: CSSProperties,
+}
+
 const TimelineView = (props: { dimensions: { height: number, width: number } }) => {
     const {dimensions} = props;
     const heights = {
         startingHeight: 140,
-        totalHeight: 400,
-        iconHeight: dimensions.width < 480 ? 64 : 128,
+        totalHeight: 300,
+        iconSize: dimensions.width < 480 ? 64 : 128,
     }
     const timings = {
         start: dimensions.height - 400,
-        dotTimeout: 125,
-        connectorTimeout: 300,
-        textTimeout: 125,
+        dotTimeout: 100,
+        connectorTimeout: 200,
+        textTimeout: 100,
     }
     const decorationWait = timings.dotTimeout + timings.connectorTimeout;
 
@@ -41,7 +57,7 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
         {
             title: 'Grace & Fecund Met for the 1st Time',
             body: 'They met in the university',
-            date: 'September 2010',
+            date: '09.2010',
             icon: {
                 'src': campusLifeIcon,
                 'alt': 'Campus Life',
@@ -50,7 +66,7 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
         {
             title: 'Grace & Fecund Went on Their 1st Date',
             body: 'The watched classical music concert in Goethe Haus',
-            date: <span>2<sup>nd</sup> July, 2011</span>,
+            date: '02.07.2011',
             icon: {
                 src: musicIcon,
                 alt: 'Music',
@@ -59,7 +75,7 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
         {
             title: 'Grace & Fecund Travelled Together for the 1st Time',
             body: 'The chose Jogjakarta as their first destination',
-            date: 'August-September 2013',
+            date: '09.2013',
             icon: {
                 src: travellingIcon,
                 alt: 'Music',
@@ -68,7 +84,7 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
         {
             title: 'Grace & Fecund are Engaged',
             body: 'They made Tingjing and Sangjit days to be one simple ceremony',
-            date: 'May 2021',
+            date: '03.05.2021',
             icon: {
                 src: sangjitIcon,
                 alt: 'Sangjit',
@@ -77,7 +93,7 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
         {
             title: 'Fecund Proposed Grace',
             body: 'She said YES!',
-            date: <span>25<sup>th</sup> September, 2021</span>,
+            date: '25.09.2021',
             icon: {
                 src: proposeIcon,
                 alt: 'Proposal',
@@ -85,8 +101,8 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
         },
         {
             title: 'The Day will be Remembered Forever',
-            body: 'A small ceremony will be held that all can witness here',
-            date: <span>12<sup>th</sup> November, 2021</span>,
+            body: <span>A small ceremony will be held that all can witness <span className={styles.boldUnderline}>here</span></span>,
+            date: '12.11.2021',
             icon: {
                 src: weddingDayIcon,
                 alt: 'Wedding Day',
@@ -98,21 +114,6 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
         return position === 'opposite' ? 'flex-end' : 'flex-start';
     }
 
-    type AnimateStoryContentPropsType = {
-        children?: JSX.Element[] | JSX.Element | string,
-        index: number,
-        mode: string,
-        position?: string,
-        animateProperties?: {
-            startValue?: number,
-            endValue?: number,
-            property?: string
-        }[],
-        shouldWaitForText?: boolean,
-        shouldWaitForDecoration?: boolean,
-        customWaitDuration?: number,
-        style?: CSSProperties,
-    }
     const AnimateStoryContent = (props: AnimateStoryContentPropsType) => {
         const {index, mode, position, animateProperties, customWaitDuration, style} = props;
         let {shouldWaitForText, shouldWaitForDecoration} = props
@@ -145,8 +146,8 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
                     ...style,
                     // @ts-ignore
                     justifyContent: getFlexTimelineJustifyStyle(position),
-                    height: heights.iconHeight,
-                    color: colours.tertiary,
+                    height: heights.iconSize,
+                    color: colours.primary,
                 } : mode === 'icon' ? style ?? {} : undefined}
             >
                 {isValidElement(props.children) ? props.children : <div style={style}>{props.children}</div>}
@@ -171,7 +172,13 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
                             shouldWaitForDecoration={false}
                             style={{fontSize: headerFontSize}}
                         >
-                            {data.date}
+                            <>
+                                <span style={{marginRight: 10}}>
+                                {data.date}
+                                </span>
+                                <span style={{width: heights.iconSize/2 + 20, marginRight: -heights.iconSize/2}} className={styles.uselessDateLine}>
+                                </span>
+                            </>
                         </AnimateStoryContent>
                     );
                 } else if (mode === 'normal' && (index & 1)) {
@@ -183,19 +190,29 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
                             shouldWaitForDecoration={false}
                             style={{fontSize: headerFontSize}}
                         >
-                            {data.date}
+                            <>
+                                <span style={{width: heights.iconSize/2 + 20, marginLeft: -heights.iconSize/2}} className={styles.uselessDateLine}>
+                                </span>
+                                <span style={{marginLeft: 10}}>
+                                    {data.date}
+                                </span>
+                            </>
                         </AnimateStoryContent>
                     );
                 }
 
                 return (
-                    <AnimateStoryContent index={index} mode={'content'} shouldWaitForDecoration={false} style={{display: 'flex', flexDirection: 'column'}}>
+                    <AnimateStoryContent index={index} mode={'content'} shouldWaitForDecoration={false}
+                                         style={{display: 'flex', flexDirection: 'column'}}>
                         <div className={styles.timelineHead}
-                             style={{justifyContent: getFlexTimelineJustifyStyle(index & 1 ? 'opposite' : 'normal')}}>
-                            <h3 style={{minHeight: heights.iconHeight, fontSize: headerFontSize}}
-                                className={styles.timelineHeaderStyle}> {data.title || ''} </h3>
+                             style={{minHeight: heights.iconSize, flexDirection: 'column', justifyContent: 'center', alignItems: getFlexTimelineJustifyStyle(index & 1 ? 'opposite' : 'normal')}}>
+                            <h3 style={{fontSize: headerFontSize}}
+                                className={styles.timelineHeaderStyle}>
+                                {data.title || ''}
+                            </h3>
+                            <p className={styles.timelineBodyStyle}
+                               style={{fontSize: bodyFontSize}}> {data.body || ''} </p>
                         </div>
-                        <p className={styles.timelineBodyStyle} style={{fontSize: bodyFontSize}}> {data.body || ''} </p>
                     </AnimateStoryContent>
                 );
             }
@@ -203,8 +220,8 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
                 if (data.icon) {
                     return (
                         <div style={{
-                            height: heights.iconHeight,
-                            width: heights.iconHeight,
+                            height: heights.iconSize,
+                            width: heights.iconSize,
                             display: 'flex',
                             justifyContent: 'center',
                             alignItems: 'center',
@@ -220,17 +237,26 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
                                         {
                                             property: 'height',
                                             startValue: 0,
-                                            endValue: heights.iconHeight,
+                                            endValue: heights.iconSize,
                                         },
                                         {
                                             property: 'width',
                                             startValue: 0,
-                                            endValue: heights.iconHeight,
+                                            endValue: heights.iconSize,
                                         },
                                     ]
                                 }
+                                style={{
+                                    backgroundColor: colours.primary,
+                                    borderRadius: '50%',
+                                    zIndex: 1,
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    overflow: 'hidden',
+                                }}
                             >
-                                <data.icon.src height={'100%'}/>
+                                <data.icon.src height={'calc(100% - 10px)'}/>
                             </AnimateStoryContent>
                         </div>
                     );
@@ -274,7 +300,7 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
                         <TimelineSeparator>
                             {TimelineIcon()}
                             {
-                                index == timelineContents.length-1 ? <></> : <TimelineConnector/>
+                                index == timelineContents.length - 1 ? <></> : <></>
                             }
                         </TimelineSeparator>
                         <TimelineContent>
@@ -289,11 +315,14 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
     }
 
     return (
-        <div style={{minHeight: heights.totalHeight * timelineContents.length + 100}}>
-            <Timeline>
-                {TimelineItemComponent()}
-            </Timeline>
-        </div>
+        <>
+            <h2 className={styles.howWeMetHeader}>How We Met</h2>
+            <div style={{minHeight: heights.totalHeight * timelineContents.length + 20}}>
+                <Timeline>
+                    {TimelineItemComponent()}
+                </Timeline>
+            </div>
+        </>
     );
 };
 

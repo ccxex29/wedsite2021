@@ -1,5 +1,4 @@
 import {useEffect, useState} from 'react';
-import {Row, Col} from 'antd';
 import Image from 'next/image';
 import styles from '../styles/HomePage.module.sass';
 import TimelineView from '../components/TimelineView';
@@ -74,45 +73,40 @@ const Home = (): JSX.Element => {
                     <Image
                         className={styles.imageCover}
                         src={'wedsite2021/HAN_8747.jpg?q=85&fit=max&auto=format&auto=compress'}
-                        // blurDataURL={'https://imgix.femmund.com/wedsite2021/HAN_8747.jpg?w=100'}
                         layout={'fill'}
                         objectFit={'cover'}
-                        // placeholder={'blur'}
-                        // priority={true}
-                        // quality={87}
                         alt={''}
                     />
                 </Plx>
-                    <Row justify={'center'} align={'middle'} style={{
-                        flexDirection: 'column',
-                        height: '100%',
-                        width: '100%',
-                        position: 'absolute',
-                        top: 0,
-                        textAlign: 'center',
-                    }}>
-                        <Col>
-                            <h1 style={{
-                                color: '#fff',
-                                fontSize: 80,
-                            }}>{'Title & Title'}</h1>
-                        </Col>
-                        <Col>
-                            <p style={{
-                                color: '#fff',
-                                fontSize: '1.2em',
-                            }}>
-                                Some other words maybe?
-                            </p>
-                        </Col>
-                    </Row>
+                    {/*<Row justify={'center'} align={'middle'} style={{*/}
+                    {/*    flexDirection: 'column',*/}
+                    {/*    height: '100%',*/}
+                    {/*    width: '100%',*/}
+                    {/*    position: 'absolute',*/}
+                    {/*    top: 0,*/}
+                    {/*    textAlign: 'center',*/}
+                    {/*}}>*/}
+                        {/*<Col>*/}
+                        {/*    <h1 style={{*/}
+                        {/*        color: '#fff',*/}
+                        {/*        fontSize: 80,*/}
+                        {/*    }}>{'Title & Title'}</h1>*/}
+                        {/*</Col>*/}
+                        {/*<Col>*/}
+                        {/*    <p style={{*/}
+                        {/*        color: '#fff',*/}
+                        {/*        fontSize: '1.2em',*/}
+                        {/*    }}>*/}
+                        {/*        Some other words maybe?*/}
+                        {/*    </p>*/}
+                        {/*</Col>*/}
+                    {/*</Row>*/}
             </section>
-            <section aria-label={'Our Story Section'} id={'section-our-story'} style={{
+            <section aria-label={'How We Met'} id={'section-how-we-met'} style={{
                 position: 'relative',
                 paddingBlock: 100,
-                backgroundColor: colours.white,
+                backgroundColor: colours.tertiary,
             }}>
-                <h2 style={{textAlign: 'center', marginBottom: 75, fontWeight: 'bold', fontSize: '2rem',}}>Our Story</h2>
                 {/*<p style={{*/}
                 {/*    fontSize: '1.2rem',*/}
                 {/*    paddingInline: '6rem',*/}

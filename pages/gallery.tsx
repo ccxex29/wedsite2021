@@ -28,7 +28,7 @@ const Gallery = (): JSX.Element => {
             const clonedImageKeys = [...imagePaths.keys()];
             const imageLoad = (imagePath: string, imageKey: number) => {
                 return new Promise((resolve, reject) => {
-                    fetch(`https://imgix.femmund.com/${imagePath}`)
+                    fetch(`https://imgix.femmund.com/${imagePath}?fit=clip&h=1440&q=75&auto=compress,format`)
                         .then(res => res.blob())
                         .then(blob => new Promise(resolve => {
                             const fReader = new FileReader();
@@ -49,17 +49,8 @@ const Gallery = (): JSX.Element => {
                         })
                         .catch(() => {
                             console.error('Error fetching image data');
+                            reject();
                         });
-                    // const img = new Image();
-                    // img.src = `https://imgix.femmund.com/${imagePath}`;
-                    // img.addEventListener('load', () => {
-                    //     setDoneCount(prevState => ++prevState);
-                    //     resolve(img);
-                    // });
-                    // img.addEventListener('error', () => {
-                    //     setDoneCount(prevState => ++prevState);
-                    //     reject(img);
-                    // });
                 });
             };
             while (clonedImagePaths.length) {
@@ -121,7 +112,7 @@ const Gallery = (): JSX.Element => {
         return imagePaths.map((imagePath, imageIter) => (
             <ImageListItem key={imagePath} className={styles.galleryThumb}>
                 <AntdImage
-                    src={loadedImages[imageIter] || imagePath}
+                    src={loadedImages[imageIter] || ''}
                     alt={''}
                 />
             </ImageListItem>
@@ -137,21 +128,21 @@ const Gallery = (): JSX.Element => {
                     </Alert> :
                     null
             }
-            {
-                loading ?
-                    (
-                        <div className={styles.loadingPercentage}>
-                            <div>Please Wait While We&apos;re Loading Gallery Images</div>
-                            <div>
-                                {loadingPercentage} %
-                            </div>
-                        </div>
-                    ) : (
+            {/*{*/}
+            {/*    loading ?*/}
+            {/*        (*/}
+            {/*            <div className={styles.loadingPercentage}>*/}
+            {/*                <div>Please Wait While We&apos;re Loading Gallery Images</div>*/}
+            {/*                <div>*/}
+            {/*                    {loadingPercentage} %*/}
+            {/*                </div>*/}
+            {/*            </div>*/}
+            {/*        ) : (*/}
                         <ImageList variant={'masonry'} cols={4} gap={8} className={styles.galleryThumbs}>
                             { GetImageListItems() }
                         </ImageList>
-                    )
-            }
+            {/*        )*/}
+            {/*}*/}
         </main>
     );
 }

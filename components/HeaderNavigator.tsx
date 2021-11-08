@@ -38,6 +38,10 @@ const HeaderNavigator = (): JSX.Element => {
         return router.pathname === '/livestreaming';
     };
 
+    const isOurStory = (): boolean => {
+        return router.pathname === '/our-story';
+    }
+
     const isHome = (): boolean => {
         return router.pathname === '/';
     };
@@ -110,6 +114,13 @@ const HeaderNavigator = (): JSX.Element => {
                               // })`
                           }}
                     >
+                        <Menu.Item key={'/our-story'} className={!isLivestreaming() ? styles.menuItemBG : styles.menuItemNoBG}>
+                            <Link href={'/our-story'}>
+                                <a>
+                                    Our Story
+                                </a>
+                            </Link>
+                        </Menu.Item>
                         {/* Live Streaming Route */}
                         <Menu.Item key={'/livestreaming'} className={!isLivestreaming() ? styles.menuItemBG : styles.menuItemNoBG}>
                             <Link href={'/livestreaming'}>
