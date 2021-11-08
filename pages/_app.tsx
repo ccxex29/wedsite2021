@@ -28,9 +28,9 @@ function MyApp({Component, pageProps}: AppProps) {
             <Head>
                 <title>FecUndGrace</title>
                 <meta name="description" content="Fecund and Grace's Wedding Website"/>
-                <meta name={'keywords'} content={'fecund grace wedding ceremony live livestreaming stream gallery video'} />
+                <meta name={'keywords'} content={'lie fecund maria stephanie grace wedding ceremony live livestreaming livestream streaming stream gallery video slideshow'} />
                 <meta name={'theme-color'} content={colours.primary} />
-                <link rel={'canonical'} href={'https://wedsite.femmund.com'} />
+                <link rel={'canonical'} href={'https://www.fecundgrace.com'} />
                 <link rel="icon" href="/favicon.ico"/>
                 <link rel={'stylesheet'} href={'https://unpkg.com/nprogress@0.2.0/nprogress.css'}/>
             </Head>
