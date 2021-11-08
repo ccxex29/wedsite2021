@@ -12,7 +12,7 @@ const InvitationSection = () => {
                 <NameSignature width={'70%'} />
             </div>
             <div className={styles.invitationInteractable}>
-                <h2 className={styles.invitationHeader}>Our Online Wedding Ceremony On</h2>
+                <h2 className={styles.invitationHeader}>Our Wedding Ceremony</h2>
                 <p className={styles.invitationSchedule}>
                     Friday, 12<sup>th</sup> November 2021<br/>
                     at 10 a.m. (GMT+7)
