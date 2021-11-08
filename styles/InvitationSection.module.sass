@@ -1,8 +1,39 @@
 .invitationWrapper
     padding: 4rem 6rem
-    background-color: var(--wedsite-white)
+    background-color: var(--wedsite-primary)
+    display: flex
+    gap: 2rem
+    > *
+        flex: 1
+        display: flex
+        flex-direction: column
+
+.invitationHeader
+    font-size: 1.6em
+    font-weight: bold
+    color: var(--wedsite-tertiary)
+
+.invitationSignature
+    display: flex
+    align-items: center
+
+.invitationInteractable
     display: flex
     flex-direction: column
     justify-content: center
-    align-items: center
-    text-align: center
+
+.invitationSchedule
+    font-size: 1.5em
+    font-weight: 600
+    color: var(--wedsite-tertiary)
+
+.joinButton
+    padding: 8px 18px
+    border-radius: 28px
+    background-color: var(--wedsite-tertiary)
+    outline: none
+    border: none
+    color: var(--wedsite-primary)
+    font-weight: bold
+    font-size: 18px
+    cursor: pointer

@@ -4,14 +4,23 @@ import {HeartFilled} from '@ant-design/icons';
 const Footer = (): JSX.Element => {
     return (
         <footer className={styles.footer}>
-            <p style={{textAlign: 'center'}}>
-                Made with&nbsp;
-                <HeartFilled style={{color: 'red'}} />
-                &nbsp;by the joint effort of the celebrants
-            </p>
-            <p>
-                Powered by various techs including Next.js, Cloudflare, Backblaze, Imgix and Netlify
-            </p>
+            <div className={styles.footerTextLine}>
+                <span>
+                Fecund & Grace
+                </span>
+                <span className={styles.bar} style={{marginInline: 8}}/>
+                <span>
+                    Est. 12.11.2021
+                </span>
+            </div>
+            {/*<p style={{textAlign: 'center'}}>*/}
+            {/*    Made with&nbsp;*/}
+            {/*    <HeartFilled style={{color: 'red'}} />*/}
+            {/*    &nbsp;by the joint effort of the celebrants*/}
+            {/*</p>*/}
+            {/*<p>*/}
+            {/*    Powered by various techs including Next.js, Cloudflare, Backblaze, Imgix and Netlify*/}
+            {/*</p>*/}
         </footer>
     );
 };

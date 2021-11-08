@@ -3,5 +3,5 @@ export default {
     'secondary': '#CCDAD8',
     'tertiary': '#324148',
     'accent': '#658378',
-    'white': '#EDF4F0',
+    'white': '#EBF2F1',
 }

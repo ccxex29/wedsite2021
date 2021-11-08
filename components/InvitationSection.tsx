@@ -1,21 +1,29 @@
 import {Button} from '@mui/material';
 import styles from '../styles/InvitationSection.module.sass';
 import Link from 'next/link';
+import colours from '../constants/colours';
+
+import NameSignature from '../public/name.svg';
 
 const InvitationSection = () => {
     return (
         <div className={styles.invitationWrapper} aria-label={'Schedule Invitation'}>
-            <h2 style={{fontSize: '1em'}}>Our Online Wedding Ceremony On</h2>
-            <p style={{fontSize: '1.5em'}}>
-                Friday, 12 November 2021<br/>
-                10 AM (GMT+7)
-            </p>
-            <div style={{marginTop: '1.5rem'}}>
-                <Link href={'/livestreaming'}>
-                    <a>
-                    <Button color={'tertiary'} variant={'contained'}>JOIN US</Button>
-                    </a>
-                </Link>
+            <div className={styles.invitationSignature}>
+                <NameSignature width={'70%'} />
+            </div>
+            <div className={styles.invitationInteractable}>
+                <h2 className={styles.invitationHeader}>Our Online Wedding Ceremony On</h2>
+                <p className={styles.invitationSchedule}>
+                    Friday, 12<sup>th</sup> November 2021<br/>
+                    at 10 a.m. (GMT+7)
+                </p>
+                <div>
+                    <Link href={'/livestreaming'}>
+                        <a>
+                            <button className={styles.joinButton}>JOIN US</button>
+                        </a>
+                    </Link>
+                </div>
             </div>
         </div>
     );
