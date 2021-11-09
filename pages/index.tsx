@@ -72,48 +72,18 @@ const Home = (): JSX.Element => {
                 >
                     <Image
                         className={styles.imageCover}
-                        src={'wedsite2021/HAN_8747.jpg?q=85&fit=max&auto=format&auto=compress'}
+                        src={'wedsite2021/HAN_8747.jpg?q=70&fit=clip&auto=format&auto=compress&h=1440'}
                         layout={'fill'}
                         objectFit={'cover'}
                         alt={''}
                     />
                 </Plx>
-                    {/*<Row justify={'center'} align={'middle'} style={{*/}
-                    {/*    flexDirection: 'column',*/}
-                    {/*    height: '100%',*/}
-                    {/*    width: '100%',*/}
-                    {/*    position: 'absolute',*/}
-                    {/*    top: 0,*/}
-                    {/*    textAlign: 'center',*/}
-                    {/*}}>*/}
-                        {/*<Col>*/}
-                        {/*    <h1 style={{*/}
-                        {/*        color: '#fff',*/}
-                        {/*        fontSize: 80,*/}
-                        {/*    }}>{'Title & Title'}</h1>*/}
-                        {/*</Col>*/}
-                        {/*<Col>*/}
-                        {/*    <p style={{*/}
-                        {/*        color: '#fff',*/}
-                        {/*        fontSize: '1.2em',*/}
-                        {/*    }}>*/}
-                        {/*        Some other words maybe?*/}
-                        {/*    </p>*/}
-                        {/*</Col>*/}
-                    {/*</Row>*/}
             </section>
             <section aria-label={'How We Met'} id={'section-how-we-met'} style={{
                 position: 'relative',
-                paddingBlock: 100,
+                padding: '100px 0',
                 backgroundColor: colours.tertiary,
             }}>
-                {/*<p style={{*/}
-                {/*    fontSize: '1.2rem',*/}
-                {/*    paddingInline: '6rem',*/}
-                {/*    paddingBottom: '4rem',*/}
-                {/*}}>*/}
-                {/*    {someStoryText}*/}
-                {/*</p>*/}
                 <TimelineView dimensions={dimensions} />
             </section>
             <section aria-label={'Welcome Invitation Section'} id={'section-welcome-invitation'} className={styles.welcomeInvitation}>

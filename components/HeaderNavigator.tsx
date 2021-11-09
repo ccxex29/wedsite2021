@@ -50,6 +50,10 @@ const HeaderNavigator = (): JSX.Element => {
         return router.pathname === '/gallery';
     };
 
+    const isStaticHeader = (): boolean => {
+        return isLivestreaming() || isOurStory();
+    }
+
     /**
      * Dynamic Header Logo/Title
      *
@@ -61,13 +65,14 @@ const HeaderNavigator = (): JSX.Element => {
             <Link href={'/'}>
                 <a className={styles.titleLogo}
                    style={{
-                       color: !isLivestreaming() ? `hsl(0, 0%, 100%)` : '#000',
+                       color: !isStaticHeader() ? `hsl(0, 0%, 100%)` : '#000',
                    }}
                    aria-label={'Home'}
                 >
                     <Logo svgProps={{
-                        fill: isLivestreaming() ? colours.tertiary : '#FFF',
-                    }} height={72} width={72} />
+                        stroke: isStaticHeader() ? colours.tertiary : colours.primary,
+                        fill: isStaticHeader() ? colours.tertiary : colours.primary,
+                    }} height={80} width={80} />
                     {/*Fec*/}
                     {/*<span className={styles.undText} style={isLivestreaming() ? {color: colours.accent} : {}}>{andText}</span>*/}
                     {/*Grace*/}
@@ -94,7 +99,7 @@ const HeaderNavigator = (): JSX.Element => {
                 className={styles.pageHeaderStyle}
                 style={{
                     backgroundColor:
-                        isLivestreaming() ?
+                        isStaticHeader() ?
                             'unset' :
                             isHome() ?
                             `rgba(${colourRgbMap}, ${headerTranslucentColor()})` :
@@ -114,7 +119,7 @@ const HeaderNavigator = (): JSX.Element => {
                               // })`
                           }}
                     >
-                        <Menu.Item key={'/our-story'} className={!isLivestreaming() ? styles.menuItemBG : styles.menuItemNoBG}>
+                        <Menu.Item key={'/our-story'} className={!isStaticHeader() ? styles.menuItemBG : styles.menuItemNoBG}>
                             <Link href={'/our-story'}>
                                 <a>
                                     Our Story
@@ -122,7 +127,7 @@ const HeaderNavigator = (): JSX.Element => {
                             </Link>
                         </Menu.Item>
                         {/* Live Streaming Route */}
-                        <Menu.Item key={'/livestreaming'} className={!isLivestreaming() ? styles.menuItemBG : styles.menuItemNoBG}>
+                        <Menu.Item key={'/livestreaming'} className={!isStaticHeader() ? styles.menuItemBG : styles.menuItemNoBG}>
                             <Link href={'/livestreaming'}>
                                 <a>
                                     Livestreaming
@@ -130,7 +135,7 @@ const HeaderNavigator = (): JSX.Element => {
                             </Link>
                         </Menu.Item>
                         {/* Gallery Route */}
-                        <Menu.Item key={'/gallery'} className={!isLivestreaming() ? styles.menuItemBG : styles.menuItemNoBG}>
+                        <Menu.Item key={'/gallery'} className={!isStaticHeader() ? styles.menuItemBG : styles.menuItemNoBG}>
                             <Link href={'/gallery'}>
                                 <a>
                                     Gallery
@@ -144,7 +149,7 @@ const HeaderNavigator = (): JSX.Element => {
         );
     }
 
-    if (isLivestreaming()) {
+    if (isStaticHeader()) {
         return (
             <DynamicHeader/>
         );

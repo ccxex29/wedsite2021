@@ -26,13 +26,14 @@ function MyApp({Component, pageProps}: AppProps) {
     return (
         <div className={styles.container}>
             <Head>
-                <title>FecUndGrace</title>
+                <title>Fecund&Grace</title>
                 <meta name="description" content="Fecund and Grace's Wedding Website"/>
                 <meta name={'keywords'} content={'lie fecund maria stephanie grace wedding ceremony live livestreaming livestream streaming stream gallery video slideshow'} />
-                <meta name={'theme-color'} content={colours.primary} />
+                <meta name={'theme-color'} content={colours.tertiary} />
                 <link rel={'canonical'} href={'https://www.fecundgrace.com'} />
                 <link rel="icon" href="/favicon.ico"/>
                 <link rel={'stylesheet'} href={'https://unpkg.com/nprogress@0.2.0/nprogress.css'}/>
+                <link rel={'stylesheet'} href={'https://cdn.plyr.io/3.6.9/plyr.css'} />
             </Head>
             <HeaderNavigator/>
 

@@ -21,6 +21,7 @@ import travellingIcon from '../public/images/travelling.svg';
 import sangjitIcon from '../public/images/sangjit.svg';
 import proposeIcon from '../public/images/propose.svg';
 import weddingDayIcon from '../public/images/wedding_day.svg';
+import Link from 'next/link';
 
 type AnimateStoryContentPropsType = {
     children?: JSX.Element[] | JSX.Element | string,
@@ -101,7 +102,7 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
         },
         {
             title: 'The Day will be Remembered Forever',
-            body: <span>A small ceremony will be held that all can witness <span className={styles.boldUnderline}>here</span></span>,
+            body: <span>A small ceremony will be held that all can witness <Link href={'/livestreaming'}><a className={'noDecoration'}><span className={styles.boldUnderline} style={{color: colours.white}}>here</span></a></Link></span>,
             date: '12.11.2021',
             icon: {
                 src: weddingDayIcon,
@@ -159,6 +160,10 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
         const plxComponents: JSX.Element[] = [];
 
         timelineContents.forEach((data, index) => {
+            const isLastIndex = (): boolean => {
+                return index === timelineContents.length - 1;
+            };
+
             const content = (mode: string) => {
                 const headerFontSize = dimensions.width < 620 ? '1rem' : dimensions.width < 800 ? '1.2rem' : '1.5rem';
                 const bodyFontSize = dimensions.width < 620 ? '0.8rem' : dimensions.width < 800 ? '1rem' : '1.2rem';
@@ -170,13 +175,24 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
                             mode={'date'}
                             position={mode}
                             shouldWaitForDecoration={false}
-                            style={{fontSize: headerFontSize}}
+                            style={{
+                                fontSize: headerFontSize,
+                                fontWeight: 600,
+                            }}
                         >
                             <>
-                                <span style={{marginRight: 10}}>
+                                <span style={{
+                                    marginRight: 10,
+                                    color: isLastIndex() ? colours.white : colours.primary,
+                                }}>
                                 {data.date}
                                 </span>
-                                <span style={{width: heights.iconSize/2 + 20, marginRight: -heights.iconSize/2}} className={styles.uselessDateLine}>
+                                <span style={{
+                                    width: heights.iconSize / 2 + 20,
+                                    marginRight: -heights.iconSize / 2,
+                                    backgroundColor: isLastIndex() ? colours.white : colours.primary,
+                                }}
+                                      className={styles.uselessDateLine}>
                                 </span>
                             </>
                         </AnimateStoryContent>
@@ -188,12 +204,24 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
                             mode={'date'}
                             position={mode}
                             shouldWaitForDecoration={false}
-                            style={{fontSize: headerFontSize}}
+                            style={{
+                                fontSize: headerFontSize,
+                                color: isLastIndex() ? colours.white : colours.primary,
+                                fontWeight: 600,
+                            }}
                         >
                             <>
-                                <span style={{width: heights.iconSize/2 + 20, marginLeft: -heights.iconSize/2}} className={styles.uselessDateLine}>
+                                <span style={{
+                                    width: heights.iconSize / 2 + 20,
+                                    marginLeft: -heights.iconSize / 2,
+                                    backgroundColor: isLastIndex() ? colours.white : colours.primary,
+                                }}
+                                      className={styles.uselessDateLine}>
                                 </span>
-                                <span style={{marginLeft: 10}}>
+                                <span style={{
+                                    marginLeft: 10,
+                                    color: isLastIndex() ? colours.white : colours.primary,
+                                }}>
                                     {data.date}
                                 </span>
                             </>
@@ -205,18 +233,30 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
                     <AnimateStoryContent index={index} mode={'content'} shouldWaitForDecoration={false}
                                          style={{display: 'flex', flexDirection: 'column'}}>
                         <div className={styles.timelineHead}
-                             style={{minHeight: heights.iconSize, flexDirection: 'column', justifyContent: 'center', alignItems: getFlexTimelineJustifyStyle(index & 1 ? 'opposite' : 'normal')}}>
-                            <h3 style={{fontSize: headerFontSize}}
+                             style={{
+                                 minHeight: heights.iconSize,
+                                 flexDirection: 'column',
+                                 justifyContent: 'center',
+                                 alignItems: getFlexTimelineJustifyStyle(index & 1 ? 'opposite' : 'normal'),
+                             }}>
+                            <h3 style={{
+                                fontSize: headerFontSize,
+                                color: isLastIndex() ? colours.white : colours.primary,
+                            }}
                                 className={styles.timelineHeaderStyle}>
                                 {data.title || ''}
                             </h3>
                             <p className={styles.timelineBodyStyle}
-                               style={{fontSize: bodyFontSize}}> {data.body || ''} </p>
+                               style={{
+                                   fontSize: bodyFontSize,
+                                   color: isLastIndex() ? colours.white : colours.primary,
+                               }}> {data.body || ''} </p>
                         </div>
                     </AnimateStoryContent>
                 );
             }
             const TimelineIcon = () => {
+
                 if (data.icon) {
                     return (
                         <div style={{
@@ -247,7 +287,7 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
                                     ]
                                 }
                                 style={{
-                                    backgroundColor: colours.primary,
+                                    backgroundColor: isLastIndex() ? colours.white : colours.primary,
                                     borderRadius: '50%',
                                     zIndex: 1,
                                     display: 'flex',
@@ -256,7 +296,7 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
                                     overflow: 'hidden',
                                 }}
                             >
-                                <data.icon.src height={'calc(100% - 10px)'}/>
+                                <data.icon.src height={'calc(100% - 10px)'} zIndex={1}/>
                             </AnimateStoryContent>
                         </div>
                     );
@@ -299,9 +339,6 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
                         </TimelineOppositeContent>
                         <TimelineSeparator>
                             {TimelineIcon()}
-                            {
-                                index == timelineContents.length - 1 ? <></> : <></>
-                            }
                         </TimelineSeparator>
                         <TimelineContent>
                             {content('normal')}

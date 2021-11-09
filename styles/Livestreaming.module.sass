@@ -1,10 +1,67 @@
+$paddingBlock: 24px
+$paddingInline: 64px
+
 .cover
-    padding: 24px
-    height: calc(100vh - 100px)
+    padding: $paddingBlock $paddingInline
     background: var(--wedsite-white)
 
-.embed
-    max-height: 100vh
-    max-width: 100vw
-    height: 100%
+.embedWrapper
+    display: flex
+    justify-content: center
     width: 100%
+
+.embed
+    max-height: calc(100vh - 150px)
+    max-width: calc(100vw - 48px)
+    height: calc(80vw * .5625)
+    width: 80vw
+    z-index: 1
+    position: relative
+
+.textSection
+    overflow: hidden
+    width: calc(100% + #{$paddingInline} * 2)
+    left: -$paddingInline
+    right: 0
+    bottom: -$paddingBlock
+    position: relative
+    min-height: calc(600px + 12vh)
+    margin-top: -12vh
+    background-color: var(--wedsite-secondary)
+    padding: calc(#{$paddingBlock} + 12vh) $paddingInline ($paddingBlock * 3) $paddingInline
+    color: var(--wedsite-tertiary)
+    font-weight: 500
+    text-align: center
+    line-height: 2
+    font-size: 1.4em
+    @media(max-width: 900px)
+        font-size: 1.2em
+    p
+        width: 80%
+        margin: 0 auto
+
+.contactWrapper
+    display: grid
+    grid-template-areas: "name number" "name number"
+    grid-template-columns: min-content min-content
+    justify-content: center
+    gap: 0 16px
+    margin: 2em 0
+    p
+        margin-bottom: 0
+        &:nth-child(odd)
+            text-align: left
+        &:nth-child(even)
+            text-align: right
+
+.quoteWrapper
+    max-width: 800px
+    min-width: 400px
+    width: 50%
+    margin: 0 auto
+    font-family: 'Bodoni MT', 'Inter', sans-serif
+    color: var(--wedsite-accent)
+    .verseAddress
+        font-style: italic
+    .verseContent
+        margin-bottom: 1em

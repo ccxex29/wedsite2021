@@ -8,7 +8,7 @@ const Footer = (): JSX.Element => {
                 <span>
                 Fecund & Grace
                 </span>
-                <span className={styles.bar} style={{marginInline: 8}}/>
+                <span className={styles.bar} style={{margin: '0 8px'}}/>
                 <span>
                     Est. 12.11.2021
                 </span>
