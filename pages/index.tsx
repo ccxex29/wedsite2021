@@ -21,6 +21,13 @@ const Home = (): JSX.Element => {
         height,
     };
 
+    const getImageUrl = () => {
+        if (width < (0.95 * height)) {
+            return 'wedsite2021/HAN_8788.jpg?q=70&fit=clip&auto=format,compress&w=1440'
+        }
+        return 'wedsite2021/HAN_8747.jpg?q=70&fit=clip&auto=format,compress&h=1440';
+    }
+
     const parallaxImgCoverData = [
         {
             start: 0,
@@ -60,7 +67,7 @@ const Home = (): JSX.Element => {
                 >
                     <Image
                         className={styles.imageCover}
-                        src={'wedsite2021/HAN_8747.jpg?q=70&fit=clip&auto=format&auto=compress&h=1440'}
+                        src={getImageUrl()}
                         layout={'fill'}
                         objectFit={'cover'}
                         alt={''}
