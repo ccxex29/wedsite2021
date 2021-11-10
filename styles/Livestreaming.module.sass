@@ -56,11 +56,11 @@ $paddingInline: 64px
 
 .quoteWrapper
     max-width: 800px
-    min-width: 400px
-    width: 50%
     margin: 0 auto
     font-family: 'Bodoni MT', 'Inter', sans-serif
     color: var(--wedsite-accent)
+    @media(max-width: 800px)
+        width: 100%
     .verseAddress
         font-style: italic
     .verseContent

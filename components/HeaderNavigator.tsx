@@ -13,7 +13,6 @@ import Logo from './svgr/Logo';
 const topScrollTarget: number = 200;
 
 const HeaderNavigator = (): JSX.Element => {
-    const [andText] = useState('Und');
     const [trackedYOffset, setTrackedYOffset] = useState(0);
     const router = useRouter();
 
@@ -73,9 +72,6 @@ const HeaderNavigator = (): JSX.Element => {
                         stroke: isStaticHeader() ? colours.tertiary : colours.primary,
                         fill: isStaticHeader() ? colours.tertiary : colours.primary,
                     }} height={80} width={80} />
-                    {/*Fec*/}
-                    {/*<span className={styles.undText} style={isLivestreaming() ? {color: colours.accent} : {}}>{andText}</span>*/}
-                    {/*Grace*/}
                 </a>
             </Link>
         )

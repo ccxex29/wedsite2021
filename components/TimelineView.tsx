@@ -296,7 +296,7 @@ const TimelineView = (props: { dimensions: { height: number, width: number } }) 
                                     overflow: 'hidden',
                                 }}
                             >
-                                <data.icon.src height={'calc(100% - 10px)'} zIndex={1}/>
+                                <data.icon.src height={'calc(100% - 10px)'}/>
                             </AnimateStoryContent>
                         </div>
                     );
