@@ -4,8 +4,10 @@ import styles from '../styles/Gallery.module.sass';
 import axios from 'axios';
 import {useEffect, useRef, useState} from 'react';
 import NProgress from 'nprogress';
+import useWindowSize from '../components/hooks/useWindowSize';
 
 const Gallery = (): JSX.Element => {
+    const dimensions = useWindowSize();
     const [loading, setLoading] = useState(true);
     const [loadingPercentage, setLoadingPercentage] = useState<string>('0');
     const [doneCount, setDoneCount] = useState(0);
@@ -18,7 +20,7 @@ const Gallery = (): JSX.Element => {
     const [loadedImages, setLoadedImages] = useState<string[]>([]);
 
     useEffect(() => {
-        setLoadingPercentage((doneCount/imagePathCount.current * 100).toFixed(2));
+        setLoadingPercentage((doneCount / imagePathCount.current * 100).toFixed(2));
     }, [doneCount]);
 
     useEffect(() => {
@@ -124,25 +126,13 @@ const Gallery = (): JSX.Element => {
             {
                 errorMessage.isError ?
                     <Alert severity={'error'} style={{marginBottom: 20}}>
-                        { errorMessage.message }
+                        {errorMessage.message}
                     </Alert> :
                     null
             }
-            {/*{*/}
-            {/*    loading ?*/}
-            {/*        (*/}
-            {/*            <div className={styles.loadingPercentage}>*/}
-            {/*                <div>Please Wait While We&apos;re Loading Gallery Images</div>*/}
-            {/*                <div>*/}
-            {/*                    {loadingPercentage} %*/}
-            {/*                </div>*/}
-            {/*            </div>*/}
-            {/*        ) : (*/}
-                        <ImageList variant={'masonry'} cols={4} gap={8} className={styles.galleryThumbs}>
-                            { GetImageListItems() }
-                        </ImageList>
-            {/*        )*/}
-            {/*}*/}
+            <ImageList variant={'masonry'} cols={dimensions.width < 1000 ? 3 : 4} gap={8} className={styles.galleryThumbs}>
+                {GetImageListItems()}
+            </ImageList>
         </main>
     );
 }

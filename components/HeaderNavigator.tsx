@@ -6,6 +6,7 @@ import styles from '../styles/Header.module.sass';
 import colours from '../constants/colours';
 import {hexToRgb} from '@mui/system';
 import Logo from './svgr/Logo';
+import useWindowSize from './hooks/useWindowSize';
 
 /**
  * @type number
@@ -14,6 +15,7 @@ const topScrollTarget: number = 200;
 
 const HeaderNavigator = (): JSX.Element => {
     const [trackedYOffset, setTrackedYOffset] = useState(0);
+    const dimensions = useWindowSize();
     const router = useRouter();
 
     useEffect(() => {
@@ -50,7 +52,7 @@ const HeaderNavigator = (): JSX.Element => {
     };
 
     const isStaticHeader = (): boolean => {
-        return isLivestreaming() || isOurStory();
+        return isLivestreaming() || isOurStory() || isGallery();
     }
 
     /**
@@ -147,7 +149,9 @@ const HeaderNavigator = (): JSX.Element => {
 
     if (isStaticHeader()) {
         return (
-            <DynamicHeader/>
+            <header>
+                <DynamicHeader/>
+            </header>
         );
     }
 
