@@ -1,17 +1,18 @@
-import {useEffect, useState} from 'react';
 import Image from 'next/image';
-import styles from '../styles/HomePage.module.sass';
 import TimelineView from '../components/TimelineView';
 import InvitationSection from '../components/InvitationSection';
-import colours from '../constants/colours';
-import NProgress from 'nprogress';
-// @ts-ignore
-import Plx from 'react-plx';
 import WelcomeInvitation from '../components/WelcomeInvitation';
 import useWindowSize from '../components/hooks/useWindowSize';
+import {Link} from 'react-scroll';
 
-const someStoryText =
-"Grace and Fecund first met in university through a campus event in Binus University. Grace was a freshman, and Fecund was a sophomore at that time.  After Grace's first year, she accidentally met Fecund again, and after seven months of going out together, they finally in a relationship. They used to wait for each other to meet after class to have lunch together, try new cafes or eat their favourite foods. Also, sometimes they did school's projects together. They had different hobbies like Grace adores classical music, so she takes Fecund to watch classical concerts and introduces many songs. She also loves travelling, she asked him to go with her, tried going to new destinations and now, he can't wait to go to more places with her. Fecund likes films, so he often takes Grace to the cinema. He is more capable of design; it makes him help and teaches her a lot of it. Fun fact, he is neater, cleaner and calmer than Grace. But, Grace is well-managed and able to think faster. So, they ideally fit and help each other. After almost ten years and cherishing every moment together, they decided to take a new step in their life to start a new family."
+import styles from '../styles/HomePage.module.sass';
+
+import colours from '../constants/colours';
+import NProgress from 'nprogress';
+
+// @ts-ignore
+import Plx from 'react-plx';
+import {BsArrowDownCircle as ArrowDown} from 'react-icons/bs';
 
 const Home = (): JSX.Element => {
     NProgress.done();
@@ -21,8 +22,12 @@ const Home = (): JSX.Element => {
         height,
     };
 
+    const shouldUseAltImage = () => {
+        return width < (0.95 * height);
+    }
+
     const getImageUrl = () => {
-        if (width < (0.95 * height)) {
+        if (shouldUseAltImage()) {
             return 'wedsite2021/HAN_8788.jpg?q=70&fit=clip&auto=format,compress&w=1440'
         }
         return 'wedsite2021/HAN_8747.jpg?q=70&fit=clip&auto=format,compress&h=1440';
@@ -73,6 +78,20 @@ const Home = (): JSX.Element => {
                         alt={''}
                     />
                 </Plx>
+                <Link to={'section-how-we-met'} smooth={true}>
+                    <div className={styles.scrollerWrapper} style={{
+                        backgroundImage: 'linear-gradient(to top, rgba(0,0,0,.5) 0%, transparent 50%)',
+                        alignItems: shouldUseAltImage() ? 'flex-end' : 'center',
+                        paddingRight: shouldUseAltImage() ? 50 : 'unset',
+                    }}>
+                        <span style={{opacity: shouldUseAltImage() ? 0 : 1}}>Click to scroll</span>
+                        <ArrowDown style={{
+                            height: 40,
+                            width: 'auto',
+                            marginTop: 10,
+                        }} />
+                    </div>
+                </Link>
             </section>
             <section aria-label={'How We Met'} id={'section-how-we-met'} style={{
                 position: 'relative',
