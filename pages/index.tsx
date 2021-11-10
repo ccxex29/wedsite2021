@@ -84,7 +84,7 @@ const Home = (): JSX.Element => {
                         alignItems: shouldUseAltImage() ? 'flex-end' : 'center',
                         paddingRight: shouldUseAltImage() ? 50 : 'unset',
                     }}>
-                        <span style={{opacity: shouldUseAltImage() ? 0 : 1}}>Click to scroll</span>
+                        <span style={{fontSize: '1.4rem', opacity: shouldUseAltImage() ? 0 : 1}}>Click to scroll</span>
                         <ArrowDown style={{
                             height: 40,
                             width: 'auto',
