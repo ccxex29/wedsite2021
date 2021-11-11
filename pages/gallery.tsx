@@ -113,10 +113,12 @@ const Gallery = (): JSX.Element => {
         }
         return imagePaths.map((imagePath, imageIter) => (
             <ImageListItem key={imagePath} className={styles.galleryThumb}>
-                <AntdImage
-                    src={loadedImages[imageIter] || ''}
-                    alt={''}
-                />
+                <div src-path={imagePath}>
+                    <AntdImage
+                        src={loadedImages[imageIter] || ''}
+                        alt={''}
+                    />
+                </div>
             </ImageListItem>
         ));
     }
