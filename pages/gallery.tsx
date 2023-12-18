@@ -63,6 +63,9 @@ const Gallery = (): JSX.Element => {
                     return;
                 }
                 for (let i = 0; i < path.length; i++) {
+										if (!path[i].endsWith('.jpg')) {
+											continue;
+										}
                     promises.push(imageLoad(path[i], keys[i]));
                 }
                 await Promise.all(promises);
